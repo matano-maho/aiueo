@@ -17,5 +17,5 @@ BMI = (user_input / user_input2 / user_input2)
 
 
 if st.button("計算"):
-  st.write = ("あなたのBPMは"+str(BMI)+"です。")
+    st.write = ("あなたのBPMは"+str(BMI)+"です。")
 

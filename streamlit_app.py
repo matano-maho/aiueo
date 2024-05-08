@@ -12,7 +12,7 @@ user_input2 = st.number_input("あなたの身長を入力してください(単
 
 bmi = (user_input / user_input2 / user_input2)
 
-st.button('計算する')
+st.button("Say hello")
 
 if 1==1:
     st.write("あなたのBMIは" + bmi + "です。")

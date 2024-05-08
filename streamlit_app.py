@@ -5,7 +5,7 @@ import streamlit as st
 st.set_page_config(page_title="タイトル", layout="wide")
 
 # タイトルを設定
-st.title('MBI計算')
+st.title('BMI計算')
 
 
 
@@ -14,8 +14,7 @@ user_input2 = st.number_input("あなたの身長を入力してください(単
 
 BMI = (user_input / user_input2 / user_input2)
 
-
-
 if st.button("計算する"):
-    st.write("あなたのBPMは"+str(BMI)+"です。")
-
+    st.write("あなたのBMIは"+str(BMI)+"です。")
+else :
+    wait

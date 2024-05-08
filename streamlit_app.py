@@ -7,6 +7,8 @@ st.set_page_config(page_title="タイトル", layout="wide")
 # タイトルを設定
 st.title('BMI計算')
 
+if st.button("a"):
+    st.write("あなたのBMIは" + str(BMI) + "です。")
 
 
 user_input = st.number_input('あなたの体重を入力してください',min_value=1)

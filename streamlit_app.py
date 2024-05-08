@@ -14,6 +14,6 @@ bmi = (user_input / user_input2 / user_input2)
 
 st.button('計算する')
 
-if 1=1:
+if 1==1:
     st.write("あなたのBMIは" + bmi + "です。")
 

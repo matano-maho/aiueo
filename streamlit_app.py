@@ -7,15 +7,14 @@ st.set_page_config(page_title="タイトル", layout="wide")
 # タイトルを設定
 st.title('BMI計算')
 
-if st.button("a"):
-    st.write("あなたのBMIは" + str(BMI) + "です。")
+
 
 
 user_input = st.number_input('あなたの体重を入力してください',min_value=1)
 user_input2 = st.number_input("あなたの身長を入力してください(単位ｍ)",min_value=0.1)
 
-BMI = (user_input / user_input2 / user_input2)
+bmi = (user_input / user_input2 / user_input2)
 
 if st.button("a"):
-    st.write("あなたのBMIは" + str(BMI) + "です。")
+    st.write("あなたのBMIは" + str(bmi) + "です。")
 

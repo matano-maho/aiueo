@@ -31,7 +31,7 @@ st.write('古文単語をランダムに表示して、勉強をサポートし�
 # Load the data
 @st.cache
 def load_data():
-    return pd.read_excel("ことわざ集.xlsx")
+    return pd.read_excel("ことわざ集.csv")
 
 words_df = load_data()
 

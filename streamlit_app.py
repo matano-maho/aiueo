@@ -64,3 +64,4 @@ if st.session_state.history:
         st.subheader(f"ガチャ {idx + 1}")
         st.write(f"ことわざ名: {word['ことわざ']}")
         st.write(f"レア度: {word['レア度']}")
+        st.write(f"意味: {word['意味']}")

@@ -50,7 +50,7 @@ if st.button('ガチャを引く！'):
     # セッションステートに選択されたことわざを保存
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
-    kotowaza = st.session_state.selected_word
+
 if 'selected_word' in st.session_state:
     st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
     st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
@@ -62,5 +62,6 @@ if 'selected_word' in st.session_state:
     if st.session_state.display_meaning:
         st.write(f"意味: {st.session_state.selected_word['意味']}")
 
-
-print(kotowaza)
+if 'selected_word' in st.session_state:
+    kotowaza = st.session_state.selected_word
+    print(kotowaza)

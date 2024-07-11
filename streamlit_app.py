@@ -41,8 +41,8 @@ if st.button('ガチャを引く！'):
         'N': 0.4,
         'R': 0.3,
         'SR': 0.2,
-        'SSR': 0.1.
-     }
+        'SSR': 0.1
+    }
     chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
     subset_df = words_df[words_df['レア度'] == chosen_rarity]
     selected_word = subset_df.sample().iloc[0]

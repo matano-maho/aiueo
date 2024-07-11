@@ -27,13 +27,16 @@ st.title('ことわざガチャ')
 
 st.write('ことわざをランダムに表示して、勉強をサポートします！')
 
-
 # Load the data
 @st.cache
 def load_data():
     return pd.read_excel("ことわざ集.xlsx")
 
 words_df = load_data()
+
+# ガチャ結果の履歴を保持するリスト
+if 'history' not in st.session_state:
+    st.session_state.history = []
 
 # ガチャ機能
 if st.button('ガチャを引く！'):
@@ -46,23 +49,18 @@ if st.button('ガチャを引く！'):
     chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
     subset_df = words_df[words_df['レア度'] == chosen_rarity]
     selected_word = subset_df.sample().iloc[0]
-    
+
     # セッションステートに選択されたことわざを保存
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
 
-if 'selected_word' in st.session_state:
-    st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
-    st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
+    # 履歴に追加する
+    st.session_state.history.append(selected_word)
 
-    # 意味を確認するボタンを追加
-    if st.button('意味を確認する'):
-        st.session_state.display_meaning = True
-
-    if st.session_state.display_meaning:
-        st.write(f"意味: {st.session_state.selected_word['意味']}")
-
-if 'selected_word' in st.session_state:
-    kotowaza = st.session_state.selected_word
-    st.write(f"ことわざ名: {kotowaza['ことわざ']}")
-    st.write(f"レア度: {kotowaza['レア度']}")
+# ガチャ履歴を表示する
+if st.session_state.history:
+    st.header('ガチャ履歴')
+    for idx, word in enumerate(st.session_state.history):
+        st.subheader(f"ガチャ {idx + 1}")
+        st.write(f"ことわざ名: {word['ことわざ']}")
+        st.write(f"レア度: {word['レア度']}")

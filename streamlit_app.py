@@ -62,6 +62,6 @@ if 'selected_word' in st.session_state:
     if st.session_state.display_meaning:
         st.write(f"意味: {st.session_state.selected_word['意味']}")
 
-korowaza = st.session_state.selected_word
+kotowaza = st.session_state.selected_word
 
-print(korowaza)
+print(kotowaza)

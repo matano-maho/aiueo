@@ -64,5 +64,5 @@ if 'selected_word' in st.session_state:
 
 if 'selected_word' in st.session_state:
     kotowaza = st.session_state.selected_word
-    st.write(f"kotowaza: {kotowaza['ことわざ']}")
+    st.write(f"ことわざ名: {kotowaza['ことわざ']}")
     st.write(f"レア度: {kotowaza['レア度']}")

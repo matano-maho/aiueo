@@ -57,6 +57,17 @@ if st.button('ガチャを引く！'):
     # 履歴に追加する
     st.session_state.history.append(selected_word)
 
+if 'selected_word' in st.session_state:
+    st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
+    st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
+
+    # 意味を確認するボタンを追加
+    if st.button('意味を確認する'):
+        st.session_state.display_meaning = True
+
+    if st.session_state.display_meaning:
+        st.write(f"意味: {st.session_state.selected_word['意味']}")
+
 # ガチャ履歴を表示する
 if st.session_state.history:
     st.header('ガチャ履歴')

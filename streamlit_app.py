@@ -24,17 +24,12 @@ st.set_page_config(page_title="ことわざガチャ")
 
 # タイトルと説明
 st.title('ことわざガチャ')
-
 st.write('ことわざをランダムに表示して、勉強をサポートします！')
 
 # Load the data
 @st.cache
 def load_data():
     return pd.read_excel("ことわざ集.xlsx")
-
-def page1():
-    st.title('テスト')
-    st.write("ここはページ1の内容です。")
 
 words_df = load_data()
 
@@ -61,26 +56,28 @@ if st.button('ガチャを引く！'):
     # 履歴に追加する
     st.session_state.history.append(selected_word)
 
+# ガチャ結果を表示する部分
 if 'selected_word' in st.session_state:
     st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
     st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
 
-    # 意味を確認するボタンを追加
+    # 意味を確認するボタンと意味表示
     if st.button('意味を確認する'):
         st.session_state.display_meaning = True
 
     if st.session_state.display_meaning:
         st.write(f"意味: {st.session_state.selected_word['意味']}")
 
+# ガチャ履歴をサイドバーに表示する
 st.sidebar.title('ガチャ履歴')
-# ガチャ履歴を表示する
 if st.session_state.history:
     for idx, word in enumerate(st.session_state.history):
         st.sidebar.subheader(f"ガチャ {idx + 1}")
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
         st.sidebar.write(f"レア度: {word['レア度']}")
 
-if st.button('戦う！！！！！'):
-    page1()
-
+# ページ切り替え用のボタン
+if st.button('別のページに行く'):
+    st.title('テストページ')
+    st.write('ここは別のページの内容です。')
 

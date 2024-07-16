@@ -32,6 +32,9 @@ st.write('ことわざをランダムに表示して、勉強をサポートし�
 def load_data():
     return pd.read_excel("ことわざ集.xlsx")
 
+def page1():
+    st.write("ここはページ1の内容です。")
+
 words_df = load_data()
 
 # ガチャ結果の履歴を保持するリスト
@@ -75,5 +78,8 @@ if st.session_state.history:
         st.sidebar.subheader(f"ガチャ {idx + 1}")
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
         st.sidebar.write(f"レア度: {word['レア度']}")
+
+if st.button('戦う！！！！！'):
+    page1()
 
 

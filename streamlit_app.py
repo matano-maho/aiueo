@@ -33,6 +33,7 @@ def load_data():
     return pd.read_excel("ことわざ集.xlsx")
 
 def page1():
+    st.title('テスト')
     st.write("ここはページ1の内容です。")
 
 words_df = load_data()

@@ -68,11 +68,14 @@ if 'selected_word' in st.session_state:
     if st.session_state.display_meaning:
         st.write(f"意味: {st.session_state.selected_word['意味']}")
 
+st.sidebar.title('ガチャ履歴')
 # ガチャ履歴を表示する
 if st.session_state.history:
     st.header('ガチャ履歴')
     for idx, word in enumerate(st.session_state.history):
-        st.subheader(f"ガチャ {idx + 1}")
-        st.write(f"ことわざ名: {word['ことわざ']}")
-        st.write(f"レア度: {word['レア度']}")
-        st.write(f"意味: {word['意味']}")
+        st.sidebar.subheader(f"ガチャ {idx + 1}")
+        st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
+        st.sidebar.write(f"レア度: {word['レア度']}")
+        st.sidebar.write(f"意味: {word['意味']}")
+
+

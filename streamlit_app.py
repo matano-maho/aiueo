@@ -75,6 +75,5 @@ if st.session_state.history:
         st.sidebar.subheader(f"ガチャ {idx + 1}")
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
         st.sidebar.write(f"レア度: {word['レア度']}")
-        st.sidebar.write(f"意味: {word['意味']}")
 
 

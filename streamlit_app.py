@@ -71,7 +71,6 @@ if 'selected_word' in st.session_state:
 st.sidebar.title('ガチャ履歴')
 # ガチャ履歴を表示する
 if st.session_state.history:
-    st.header('ガチャ履歴')
     for idx, word in enumerate(st.session_state.history):
         st.sidebar.subheader(f"ガチャ {idx + 1}")
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")

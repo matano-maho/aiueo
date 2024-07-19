@@ -22,9 +22,7 @@ import numpy as np
 
 st.set_page_config(page_title="ことわざガチャ")
 
-# タイトルと説明
-st.title('ことわざガチャ')
-st.write('ことわざをランダムに表示して、勉強をサポートします！')
+
 
 # Load the data
 @st.cache
@@ -38,6 +36,9 @@ if 'history' not in st.session_state:
     st.session_state.history = []
 
 def gacya_game():
+    # タイトルと説明
+    st.title('ことわざガチャ')
+    st.write('ことわざをランダムに表示して、勉強をサポートします！')
     if st.button('ガチャを引く！'):
         rarity_probs = {
             'N': 0.4,
@@ -68,6 +69,15 @@ def gacya_game():
         if st.session_state.display_meaning:
             st.write(f"意味: {st.session_state.selected_word['意味']}")
 
+def fight_game():
+    st.write('戦うよー')
+
+if st.sidebar.button('ガチャ開始'):
+    gacya_game()
+
+if st.sidebar.button('戦う'):
+    fight_game()
+
 # ガチャ履歴をサイドバーに表示する
 st.sidebar.title('ガチャ履歴')
 if st.session_state.history:
@@ -75,7 +85,3 @@ if st.session_state.history:
         st.sidebar.subheader(f"ガチャ {idx + 1}")
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
         st.sidebar.write(f"レア度: {word['レア度']}")
-
-if st.sidebar.button('ガチャ開始'):
-    gacya_game()
-

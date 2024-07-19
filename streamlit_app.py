@@ -94,7 +94,6 @@ if st.session_state.selected_word is not None:
         # 入力された文字列とことわざを比較
         if user_input == st.session_state.selected_word['ことわざ']:
             st.success("正解です！")
-            st.session_state.points += 1
         else:
             st.error("違います。")
             st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')

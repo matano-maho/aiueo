@@ -43,7 +43,7 @@ if 'display_meaning' not in st.session_state:
 # タイトルと説明
 st.title('ことわざバトル')
 st.write('ことわざをランダムに表示して、勉強をサポートします！')
-if st.button('ガチャを引く！'):
+if st.button('ノーマルガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'N']
     selected_word = subset_df.sample().iloc[0]
 
@@ -53,7 +53,7 @@ if st.button('ガチャを引く！'):
     # 履歴に追加する
     st.session_state.history.append(selected_word)
 
-if st.button('ガチャを引く！'):
+if st.button('レアガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'R']
     selected_word = subset_df.sample().iloc[0]
 
@@ -63,7 +63,7 @@ if st.button('ガチャを引く！'):
     # 履歴に追加する
     st.session_state.history.append(selected_word)
 
-if st.button('ガチャを引く！'):
+if st.button('スーパーレアガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'SR']
     selected_word = subset_df.sample().iloc[0]
 
@@ -73,7 +73,7 @@ if st.button('ガチャを引く！'):
     # 履歴に追加する
     st.session_state.history.append(selected_word)
 
-if st.button('ガチャを引く！'):
+if st.button('超スーパーレアガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'SSR']
     selected_word = subset_df.sample().iloc[0]
 

@@ -44,99 +44,45 @@ if 'display_meaning' not in st.session_state:
 st.title('ことわざバトル')
 st.write('ことわざをランダムに表示して、勉強をサポートします！')
 if st.button('ガチャを引く！'):
-    rarity_probs = {
-        'N': 0.4,
-        'R': 0.3,
-        'SR': 0.2,
-        'SSR': 0.1
-    }
-    chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
-    # レア度が'N'の中からランダムに選択する例
-    if chosen_rarity == 'N':
-        subset_df = words_df[words_df['レア度'] == 'N']
-        selected_word = subset_df.sample().iloc[0]
-        # セッションステートに選択されたことわざを保存
-        st.session_state.selected_word = selected_word
-        st.session_state.display_meaning = False
+    subset_df = words_df[words_df['レア度'] == 'N']
+    selected_word = subset_df.sample().iloc[0]
 
-        # 履歴に追加する
-        st.session_state.history.append(selected_word)
+    # セッションステートに選択されたことわざを保存
+    st.session_state.selected_word = selected_word
+    st.session_state.display_meaning = False
+    # 履歴に追加する
+    st.session_state.history.append(selected_word)
 
-if st.button('ノーマルガチャを引く！'):
-    rarity_probs = {
-        'N': 0.4,
-        'R': 0.3,
-        'SR': 0.2,
-        'SSR': 0.1
-    }
-    chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
-    # レア度が'N'の中からランダムに選択する例
-    if chosen_rarity == 'N':
-        subset_df = words_df[words_df['レア度'] == 'N']
-        selected_word = subset_df.sample().iloc[0]
-        # セッションステートに選択されたことわざを保存
-        st.session_state.selected_word = selected_word
-        st.session_state.display_meaning = False
+if st.button('ガチャを引く！'):
+    subset_df = words_df[words_df['レア度'] == 'R']
+    selected_word = subset_df.sample().iloc[0]
 
-        # 履歴に追加する
-        st.session_state.history.append(selected_word)
+    # セッションステートに選択されたことわざを保存
+    st.session_state.selected_word = selected_word
+    st.session_state.display_meaning = False
+    # 履歴に追加する
+    st.session_state.history.append(selected_word)
 
-if st.button('レアガチャを引く！'):
-    rarity_probs = {
-        'N': 0.4,
-        'R': 0.3,
-        'SR': 0.2,
-        'SSR': 0.1
-    }
-    chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
-    # レア度が'N'の中からランダムに選択する例
-    if chosen_rarity == 'R':
-        subset_df = words_df[words_df['レア度'] == 'R']
-        selected_word = subset_df.sample().iloc[0]
-        # セッションステートに選択されたことわざを保存
-        st.session_state.selected_word = selected_word
-        st.session_state.display_meaning = False
+if st.button('ガチャを引く！'):
+    subset_df = words_df[words_df['レア度'] == 'SR']
+    selected_word = subset_df.sample().iloc[0]
 
-        # 履歴に追加する
-        st.session_state.history.append(selected_word)
+    # セッションステートに選択されたことわざを保存
+    st.session_state.selected_word = selected_word
+    st.session_state.display_meaning = False
+    # 履歴に追加する
+    st.session_state.history.append(selected_word)
 
-if st.button('スーパーレアガチャを引く！'):
-    rarity_probs = {
-        'N': 0.4,
-        'R': 0.3,
-        'SR': 0.2,
-        'SSR': 0.1
-    }
-    chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
-    # レア度が'N'の中からランダムに選択する例
-    if chosen_rarity == 'SR':
-        subset_df = words_df[words_df['レア度'] == 'SR']
-        selected_word = subset_df.sample().iloc[0]
-        # セッションステートに選択されたことわざを保存
-        st.session_state.selected_word = selected_word
-        st.session_state.display_meaning = False
+if st.button('ガチャを引く！'):
+    subset_df = words_df[words_df['レア度'] == 'SSR']
+    selected_word = subset_df.sample().iloc[0]
 
-        # 履歴に追加する
-        st.session_state.history.append(selected_word)
+    # セッションステートに選択されたことわざを保存
+    st.session_state.selected_word = selected_word
+    st.session_state.display_meaning = False
+    # 履歴に追加する
+    st.session_state.history.append(selected_word)
 
-if st.button('超スーパーレアガチャを引く！'):
-    rarity_probs = {
-        'N': 0.4,
-        'R': 0.3,
-        'SR': 0.2,
-        'SSR': 0.1
-    }
-    chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
-    # レア度が'N'の中からランダムに選択する例
-    if chosen_rarity == 'SSR':
-        subset_df = words_df[words_df['レア度'] == 'SSR']
-        selected_word = subset_df.sample().iloc[0]
-        # セッションステートに選択されたことわざを保存
-        st.session_state.selected_word = selected_word
-        st.session_state.display_meaning = False
-
-        # 履歴に追加する
-        st.session_state.history.append(selected_word)
 
 # ガチャ結果を表示する部分
 if st.session_state.selected_word is not None:

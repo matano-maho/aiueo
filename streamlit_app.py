@@ -84,14 +84,19 @@ if st.button('超スーパーレアガチャを引く！'):
     st.session_state.history.append(selected_word)
 
 
-# ガチャ結果を表示する部分
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
     
+    # ユーザーが入力するテキストボックス
+    user_input = st.text_input("ことわざを入力してください:")
 
-
-
-
+    if st.button('正誤判定をする'):
+        # 入力された文字列とことわざを比較
+        if user_input == st.session_state.selected_word['ことわざ']:
+            st.success("正解です！")
+            st.session_state.points += 1
+        else:
+            st.error("違います。")
 
 
 # ガチャ履歴をサイドバーに表示する

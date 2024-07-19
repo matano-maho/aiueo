@@ -22,10 +22,8 @@ import numpy as np
 
 st.set_page_config(page_title="ことわざガチャ")
 
-
-
 # Load the data
-@st.cache
+@st.cache_data
 def load_data():
     return pd.read_excel("ことわざ集.xlsx")
 
@@ -35,17 +33,24 @@ words_df = load_data()
 if 'history' not in st.session_state:
     st.session_state.history = []
 
+if 'selected_word' not in st.session_state:
+    st.session_state.selected_word = None
+
+if 'display_meaning' not in st.session_state:
+    st.session_state.display_meaning = False
+
 def gacya_game():
     # タイトルと説明
     st.title('ことわざガチャ')
     st.write('ことわざをランダムに表示して、勉強をサポートします！')
+
     if st.button('ガチャを引く！'):
         rarity_probs = {
             'N': 0.4,
             'R': 0.3,
             'SR': 0.2,
-           'SSR': 0.1
-       }
+            'SSR': 0.1
+        }
         chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
         subset_df = words_df[words_df['レア度'] == chosen_rarity]
         selected_word = subset_df.sample().iloc[0]
@@ -57,12 +62,12 @@ def gacya_game():
         # 履歴に追加する
         st.session_state.history.append(selected_word)
 
-        # ガチャ結果を表示する部分
-        if 'selected_word' in st.session_state:
-            st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
-            st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
+    # ガチャ結果を表示する部分
+    if st.session_state.selected_word is not None:
+        st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
+        st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
 
-    # 意味を確認するボタンと意味表示
+        # 意味を確認するボタンと意味表示
         if st.button('意味を確認する'):
             st.session_state.display_meaning = True
 
@@ -73,10 +78,17 @@ def fight_game():
     st.write('戦うよー')
 
 if st.sidebar.button('ガチャ開始'):
-    gacya_game()
+    st.session_state.view = 'gacya_game'
 
 if st.sidebar.button('戦う'):
-    fight_game()
+    st.session_state.view = 'fight_game'
+
+# 現在のビューに基づいてコンテンツを表示
+if 'view' in st.session_state:
+    if st.session_state.view == 'gacya_game':
+        gacya_game()
+    elif st.session_state.view == 'fight_game':
+        fight_game()
 
 # ガチャ履歴をサイドバーに表示する
 st.sidebar.title('ガチャ履歴')

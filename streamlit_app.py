@@ -76,11 +76,6 @@ if st.session_state.history:
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
         st.sidebar.write(f"レア度: {word['レア度']}")
 
-if st.sideber.buton('ガチャ開始'):
+if st.sidebar.button('ガチャ開始'):
     gacya_game()
-
-# ページ切り替え用のボタン
-if st.button('別のページに行く'):
-    st.title('テストページ')
-    st.write('ここは別のページの内容です。')
 

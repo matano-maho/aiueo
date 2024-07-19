@@ -86,15 +86,8 @@ if st.button('超スーパーレアガチャを引く！'):
 
 # ガチャ結果を表示する部分
 if st.session_state.selected_word is not None:
-    st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
-    st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
-    # 意味を確認するボタンと意味表示
-    if st.button('意味を確認する'):
-        st.session_state.display_meaning = True
-
-    if st.session_state.display_meaning:
-        st.write(f"意味: {st.session_state.selected_word['意味']}")
-
+    st.header(f"意味: {st.session_state.selected_word['意味']}")
+    
 
 
 

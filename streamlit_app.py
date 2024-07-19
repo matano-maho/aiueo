@@ -37,36 +37,36 @@ words_df = load_data()
 if 'history' not in st.session_state:
     st.session_state.history = []
 
-# ガチャ機能
-if st.button('ガチャを引く！'):
-    rarity_probs = {
-        'N': 0.4,
-        'R': 0.3,
-        'SR': 0.2,
-        'SSR': 0.1
-    }
-    chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
-    subset_df = words_df[words_df['レア度'] == chosen_rarity]
-    selected_word = subset_df.sample().iloc[0]
+def gacya_game():
+    if st.button('ガチャを引く！'):
+        rarity_probs = {
+            'N': 0.4,
+            'R': 0.3,
+            'SR': 0.2,
+           'SSR': 0.1
+       }
+        chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
+        subset_df = words_df[words_df['レア度'] == chosen_rarity]
+        selected_word = subset_df.sample().iloc[0]
 
-    # セッションステートに選択されたことわざを保存
-    st.session_state.selected_word = selected_word
-    st.session_state.display_meaning = False
+        # セッションステートに選択されたことわざを保存
+        st.session_state.selected_word = selected_word
+        st.session_state.display_meaning = False
 
-    # 履歴に追加する
-    st.session_state.history.append(selected_word)
+        # 履歴に追加する
+        st.session_state.history.append(selected_word)
 
-# ガチャ結果を表示する部分
-if 'selected_word' in st.session_state:
-    st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
-    st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
+        # ガチャ結果を表示する部分
+        if 'selected_word' in st.session_state:
+            st.header(f"ことわざ名: {st.session_state.selected_word['ことわざ']}")
+            st.subheader(f"レア度: {st.session_state.selected_word['レア度']}")
 
     # 意味を確認するボタンと意味表示
-    if st.button('意味を確認する'):
-        st.session_state.display_meaning = True
+        if st.button('意味を確認する'):
+            st.session_state.display_meaning = True
 
-    if st.session_state.display_meaning:
-        st.write(f"意味: {st.session_state.selected_word['意味']}")
+        if st.session_state.display_meaning:
+            st.write(f"意味: {st.session_state.selected_word['意味']}")
 
 # ガチャ履歴をサイドバーに表示する
 st.sidebar.title('ガチャ履歴')
@@ -75,6 +75,9 @@ if st.session_state.history:
         st.sidebar.subheader(f"ガチャ {idx + 1}")
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
         st.sidebar.write(f"レア度: {word['レア度']}")
+
+if st.sideber.buton('ガチャ開始'):
+    gacya_game()
 
 # ページ切り替え用のボタン
 if st.button('別のページに行く'):

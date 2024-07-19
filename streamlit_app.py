@@ -97,7 +97,7 @@ if st.session_state.selected_word is not None:
             st.session_state.points += 1
         else:
             st.error("違います。")
-            st.write('正解は' + st.session_state.selected_word['意味'] + 'です')
+            st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
 
 
 # ガチャ履歴をサイドバーに表示する

@@ -52,15 +52,18 @@ def gacya_game():
             'SSR': 0.1
         }
         chosen_rarity = np.random.choice(list(rarity_probs.keys()), p=list(rarity_probs.values()))
-        subset_df = words_df[words_df['レア度'] == chosen_rarity]
-        selected_word = subset_df.sample().iloc[0]
 
-        # セッションステートに選択されたことわざを保存
-        st.session_state.selected_word = selected_word
-        st.session_state.display_meaning = False
+        # レア度が'N'の中からランダムに選択する例
+        if chosen_rarity == 'N':
+            subset_df = words_df[words_df['レア度'] == 'N']
+            selected_word = subset_df.sample().iloc[0]
 
-        # 履歴に追加する
-        st.session_state.history.append(selected_word)
+            # セッションステートに選択されたことわざを保存
+            st.session_state.selected_word = selected_word
+            st.session_state.display_meaning = False
+
+            # 履歴に追加する
+            st.session_state.history.append(selected_word)
 
     # ガチャ結果を表示する部分
     if st.session_state.selected_word is not None:

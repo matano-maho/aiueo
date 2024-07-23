@@ -1,21 +1,3 @@
-'''# Streamlitライブラリをインポート
-import streamlit as st
-
-# ページ設定（タブに表示されるタイトル、表示幅）
-st.set_page_config(page_title="タイトル", layout="wide")
-
-# タイトルを設定
-st.title('BMI計算')
-
-user_input = st.number_input('あなたの体重を入力してください',min_value=1)
-user_input2 = st.number_input("あなたの身長を入力してください(単位ｍ)",min_value=0.1)
-
-bmi = (user_input / user_input2 / user_input2)
-
-if st.button("計算する"):
-    st.write("あなたのBMIは" +str(bmi) + "です。")'''
-
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -83,7 +65,7 @@ if st.button('超スーパーレアガチャを引く！'):
     # 履歴に追加する
     st.session_state.history.append(selected_word)
 
-
+point = 0
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
     
@@ -94,6 +76,14 @@ if st.session_state.selected_word is not None:
         # 入力された文字列とことわざを比較
         if user_input == st.session_state.selected_word['ことわざ']:
             st.success("正解です！")
+            if subset_df == words_df[words_df['レア度'] == 'N']:
+                point = point + 10
+            elif subset_df == words_df[words_df['レア度'] == 'R']:
+                point = point + 20
+            elif subset_df == words_df[words_df['レア度'] == 'SR']:
+                point = point + 30
+            elif subset_df == words_df[words_df['レア度'] == 'SSR']:
+                point = point + 50
         else:
             st.error("違います。")
             st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
@@ -106,3 +96,5 @@ if st.session_state.history:
         st.sidebar.subheader(f"ガチャ {idx + 1}")
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
         st.sidebar.write(f"レア度: {word['レア度']}")
+
+st.write(point)

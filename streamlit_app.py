@@ -65,7 +65,7 @@ if st.button('超スーパーレアガチャを引く！'):
     # 履歴に追加する
     st.session_state.history.append(selected_word)
 
-
+st.session_state.point = 150
 if 'point' not in st.session_state:
     st.session_state.point = 0
 
@@ -87,18 +87,18 @@ if st.session_state.selected_word is not None:
             
             # 直前のガチャのレアリティがRだった場合にポイントを追加
             if st.session_state.last_rarity == 'R':
-                st.session_state.point += 10
+                st.session_state.point -= 10
             
             # 現在のことわざのレアリティに基づいてポイントを追加
             rarity = st.session_state.selected_word['レア度']
             if rarity == 'N':
-                st.session_state.point += 10
+                st.session_state.point -= 10
             elif rarity == 'R':
-                st.session_state.point += 20
+                st.session_state.point -= 20
             elif rarity == 'SR':
-                st.session_state.point += 30
+                st.session_state.point -= 30
             elif rarity == 'SSR':
-                st.session_state.point += 50
+                st.session_state.point -= 50
 
             # 直前のレアリティを更新
             st.session_state.last_rarity = rarity

@@ -108,7 +108,7 @@ if st.session_state.selected_word is not None:
             st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
 
     # 現在のポイントを表示
-    st.write(f"現在のポイント: {st.session_state.point}")
+    st.write(f"相手の体力: {st.session_state.point}")
 
 # ガチャ履歴をサイドバーに表示する
 st.sidebar.title('ガチャ履歴')

@@ -65,10 +65,18 @@ if st.button('超スーパーレアガチャを引く！'):
     # 履歴に追加する
     st.session_state.history.append(selected_word)
 
-point = 0
+
+if 'point' not in st.session_state:
+    st.session_state.point = 0
+
+# 直前のレアリティの初期化
+if 'last_rarity' not in st.session_state:
+    st.session_state.last_rarity = None
+
+# ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
-    
+
     # ユーザーが入力するテキストボックス
     user_input = st.text_input("ことわざを入力してください:")
 
@@ -76,18 +84,31 @@ if st.session_state.selected_word is not None:
         # 入力された文字列とことわざを比較
         if user_input == st.session_state.selected_word['ことわざ']:
             st.success("正解です！")
-            if words_df['レア度'] == 'N':
-                point = point + 10
-            elif words_df['レア度'] == 'R':
-                point = point + 20
-            elif words_df['レア度'] == 'SR':
-                point = point + 30
-            elif words_df['レア度'] == 'SSR':
-                point = point + 50
+            
+            # 直前のガチャのレアリティがRだった場合にポイントを追加
+            if st.session_state.last_rarity == 'R':
+                st.session_state.point += 10
+            
+            # 現在のことわざのレアリティに基づいてポイントを追加
+            rarity = st.session_state.selected_word['レア度']
+            if rarity == 'N':
+                st.session_state.point += 10
+            elif rarity == 'R':
+                st.session_state.point += 20
+            elif rarity == 'SR':
+                st.session_state.point += 30
+            elif rarity == 'SSR':
+                st.session_state.point += 50
+
+            # 直前のレアリティを更新
+            st.session_state.last_rarity = rarity
+            
         else:
             st.error("違います。")
             st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
 
+    # 現在のポイントを表示
+    st.write(f"現在のポイント: {st.session_state.point}")
 
 # ガチャ履歴をサイドバーに表示する
 st.sidebar.title('ガチャ履歴')
@@ -97,4 +118,3 @@ if st.session_state.history:
         st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
         st.sidebar.write(f"レア度: {word['レア度']}")
 
-st.write(point)

@@ -76,13 +76,13 @@ if st.session_state.selected_word is not None:
         # 入力された文字列とことわざを比較
         if user_input == st.session_state.selected_word['ことわざ']:
             st.success("正解です！")
-            if subset_df == words_df[words_df['レア度'] == 'N']:
+            if words_df['レア度'] == 'N':
                 point = point + 10
-            elif subset_df == words_df[words_df['レア度'] == 'R']:
+            elif words_df['レア度'] == 'R':
                 point = point + 20
-            elif subset_df == words_df[words_df['レア度'] == 'SR']:
+            elif words_df['レア度'] == 'SR':
                 point = point + 30
-            elif subset_df == words_df[words_df['レア度'] == 'SSR']:
+            elif words_df['レア度'] == 'SSR':
                 point = point + 50
         else:
             st.error("違います。")

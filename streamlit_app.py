@@ -12,7 +12,7 @@ def load_data():
     return df
 
 words_df = load_data()
-
+damage = 0
 # ガチャ結果の履歴を保持するリスト
 if 'history' not in st.session_state:
     st.session_state.history = []

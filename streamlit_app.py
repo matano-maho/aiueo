@@ -82,12 +82,10 @@ if st.session_state.selected_word is not None:
 
     if st.button('正誤判定をする'):
         # 入力された文字列とことわざを比較
-        if user_input == st.session_state.selected_word['ことわざ']:
+        if user_input == st.session_state.selected_word['ことわざの読み方']:
             st.success("正解です！")
             
-            # 直前のガチャのレアリティがRだった場合にポイントを追加
-            if st.session_state.last_rarity == 'R':
-                st.session_state.point -= 10
+            
             
             # 現在のことわざのレアリティに基づいてポイントを追加
             rarity = st.session_state.selected_word['レア度']

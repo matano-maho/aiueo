@@ -89,13 +89,17 @@ if st.session_state.selected_word is not None:
             # 現在のことわざのレアリティに基づいてポイントを追加
             rarity = st.session_state.selected_word['レア度']
             if rarity == 'N':
-                st.session_state.point += 10
+                damage = np.random.randint(0, 16)
+                st.session_state.point -= damage
             elif rarity == 'R':
-                st.session_state.point += 20
+                damage = np.random.randint(10, 25)
+                st.session_state.point -= damage
             elif rarity == 'SR':
-                st.session_state.point += 30
+                damage = np.random.randint(20, 45)
+                st.session_state.point -= damage
             elif rarity == 'SSR':
-                st.session_state.point += 50
+                damage = np.random.randint(40, 55)
+                st.session_state.point -= damage
 
             # 直前のレアリティを更新
             st.session_state.last_rarity = rarity
@@ -105,12 +109,16 @@ if st.session_state.selected_word is not None:
             st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
 
     # 現在のポイントを表示
+    if damage == 0:
+        st.write('残念！あなたはダメージを与えられなかった')
+    elif damage <= 10:
+        st.write('相手にかすり傷を与えた')
+    elif damage <= 45:
+        st.write('相手にそこそこのダメージを与えた')
+    elif damage <= 55:
+        st.write('相手に大ダメージを与えた')
     st.write(f"相手の体力: {st.session_state.point}")
 
-# ガチャ履歴をサイドバーに表示する
-st.sidebar.title('ガチャ履歴')
-if st.session_state.history:
-    for idx, word in enumerate(st.session_state.history):
-        st.sidebar.subheader(f"ガチャ {idx + 1}")
-        st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
-        st.sidebar.write(f"レア度: {word['レア度']}")
+    if st.session_state.point <= 0:
+        st.write('敵を倒した！')
+        st.session_state.point = 150

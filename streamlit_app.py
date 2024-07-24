@@ -110,7 +110,7 @@ if st.session_state.selected_word is not None:
 
     # 現在のポイントを表示
     if damage == -1:
-        pass
+        st.write()
     if damage == 0:
         st.write('残念！あなたはダメージを与えられなかった')
     elif damage <= 10:

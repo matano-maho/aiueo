@@ -12,7 +12,7 @@ def load_data():
     return df
 
 words_df = load_data()
-damage = 0
+damage = -1
 # ガチャ結果の履歴を保持するリスト
 if 'history' not in st.session_state:
     st.session_state.history = []
@@ -109,6 +109,8 @@ if st.session_state.selected_word is not None:
             st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
 
     # 現在のポイントを表示
+    if damage == -1:
+        pass
     if damage == 0:
         st.write('残念！あなたはダメージを与えられなかった')
     elif damage <= 10:

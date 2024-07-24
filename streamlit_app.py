@@ -110,15 +110,16 @@ if st.session_state.selected_word is not None:
 
     # 現在のポイントを表示
     if damage == -1:
-        st.write()
+        damagecoment = st.write ()
     if damage == 0:
-        st.write('残念！あなたはダメージを与えられなかった')
+        damagecoment = st.write('残念！あなたはダメージを与えられなかった')
     elif damage <= 10:
-        st.write('相手にかすり傷を与えた')
+        damagecoment = st.write('相手にかすり傷を与えた')
     elif damage <= 45:
-        st.write('相手にそこそこのダメージを与えた')
+        damagecoment = st.write('相手にそこそこのダメージを与えた')
     elif damage <= 55:
-        st.write('相手に大ダメージを与えた')
+        damagecoment = st.write('相手に大ダメージを与えた')
+    st.write(damagecoment)
     st.write(f"相手の体力: {st.session_state.point}")
 
     if st.session_state.point <= 0:

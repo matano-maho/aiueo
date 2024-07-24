@@ -13,6 +13,7 @@ def load_data():
 
 words_df = load_data()
 damage = -1
+
 # ガチャ結果の履歴を保持するリスト
 if 'history' not in st.session_state:
     st.session_state.history = []
@@ -26,9 +27,11 @@ if 'display_meaning' not in st.session_state:
 if 'point' not in st.session_state:
     st.session_state.point = 0
 
-# 直前のレアリティの初期化
 if 'last_rarity' not in st.session_state:
     st.session_state.last_rarity = None
+
+if 'is_answered' not in st.session_state:
+    st.session_state.is_answered = False
 
 # タイトルと説明
 st.title('ことわざバトル')
@@ -41,76 +44,69 @@ if st.button('ノーマルガチャを引く！'):
     # セッションステートに選択されたことわざを保存
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
-    # 履歴に追加する
     st.session_state.history.append(selected_word)
+    st.session_state.is_answered = False
 
 if st.button('レアガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'R']
     selected_word = subset_df.sample().iloc[0]
 
-    # セッションステートに選択されたことわざを保存
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
-    # 履歴に追加する
     st.session_state.history.append(selected_word)
+    st.session_state.is_answered = False
 
 if st.button('スーパーレアガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'SR']
     selected_word = subset_df.sample().iloc[0]
 
-    # セッションステートに選択されたことわざを保存
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
-    # 履歴に追加する
     st.session_state.history.append(selected_word)
+    st.session_state.is_answered = False
 
 if st.button('超スーパーレアガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'SSR']
     selected_word = subset_df.sample().iloc[0]
 
-    # セッションステートに選択されたことわざを保存
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
-    # 履歴に追加する
     st.session_state.history.append(selected_word)
+    st.session_state.is_answered = False
 
 # ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
 
-    # ユーザーが入力するテキストボックス
     user_input = st.text_input("ことわざを入力してください:")
 
     if st.button('正誤判定をする'):
-        # 入力された文字列とことわざを比較
-        if user_input == st.session_state.selected_word['ことわざの読み方']:
-            st.success("正解です！")
+        if not st.session_state.is_answered:
+            if user_input == st.session_state.selected_word['ことわざの読み方']:
+                st.success("正解です！")
 
-            # 現在のことわざのレアリティに基づいてポイントを追加
-            rarity = st.session_state.selected_word['レア度']
-            if rarity == 'N':
-                damage = np.random.randint(0, 16)
-                st.session_state.point -= damage
-            elif rarity == 'R':
-                damage = np.random.randint(10, 25)
-                st.session_state.point -= damage
-            elif rarity == 'SR':
-                damage = np.random.randint(20, 45)
-                st.session_state.point -= damage
-            elif rarity == 'SSR':
-                damage = np.random.randint(40, 55)
-                st.session_state.point -= damage
+                rarity = st.session_state.selected_word['レア度']
+                if rarity == 'N':
+                    damage = np.random.randint(0, 16)
+                elif rarity == 'R':
+                    damage = np.random.randint(10, 25)
+                elif rarity == 'SR':
+                    damage = np.random.randint(20, 45)
+                elif rarity == 'SSR':
+                    damage = np.random.randint(40, 55)
 
-            # 直前のレアリティを更新
-            st.session_state.last_rarity = rarity
-            
+                st.session_state.point -= damage
+                st.session_state.last_rarity = rarity
+                st.session_state.is_answered = True
+            else:
+                st.error("違います。")
+                st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
+                st.session_state.is_answered = True
         else:
-            st.error("違います。")
-            st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
+            st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
 
-    # 現在のポイントを表示
     if damage == -1:
-        damagecoment = st.write (  )
+        damagecoment = st.write ()
     if damage == 0:
         damagecoment = st.write('残念！あなたはダメージを与えられなかった')
     elif damage <= 10:
@@ -125,3 +121,11 @@ if st.session_state.selected_word is not None:
     if st.session_state.point <= 0:
         st.write('敵を倒した！')
         st.session_state.point = 150
+
+# ガチャ履歴をサイドバーに表示する
+st.sidebar.title('ガチャ履歴')
+if st.session_state.history:
+    for idx, word in enumerate(st.session_state.history):
+        st.sidebar.subheader(f"ガチャ {idx + 1}")
+        st.sidebar.write(f"ことわざ名: {word['ことわざ']}")
+        st.sidebar.write(f"レア度: {word['レア度']}")

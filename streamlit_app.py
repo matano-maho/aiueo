@@ -119,6 +119,7 @@ if st.session_state.selected_word is not None:
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
 
+    damagecoment = ""
     if damage == -1:
         damagecoment = ""
     elif damage == 0:
@@ -153,5 +154,4 @@ if st.session_state.selected_word is not None:
         if st.button('もう一度戦う'):
             st.session_state.point1 = 150
             st.session_state.point2 = 150
-
 

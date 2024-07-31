@@ -117,16 +117,16 @@ if st.session_state.selected_word is not None:
     elif damage == 0:
         damagecoment = '残念！あなたはダメージを与えられなかった'
     elif damage <= 10:
-        damagecoment = '相手に'+damage+'ダメージ！かすり傷を与えた'
+        damagecoment = '相手に'+str(damage)+'ダメージ！かすり傷を与えた'
     elif damage <= 35:
-        damagecoment = '相手に'+damage+'ダメージ！そこそこのダメージを与えた'
+        damagecoment = '相手に'+str(damage)+'ダメージ！そこそこのダメージを与えた'
     elif damage <= 45:
-        damagecoment = '相手に'+damage+'ダメージ！大ダメージを与えた'
+        damagecoment = '相手に'+str(damage)+'ダメージ！大ダメージを与えた'
     
     st.write(damagecoment)
     st.write(f"相手の体力: {st.session_state.point1}")
 
-    st.write('自分は'+owndamage+'のダメージを受けた')
+    st.write('自分は'+str(owndamage)+'のダメージを受けた')
 
     if st.session_state.point1 <= 0:
         st.write('敵を倒した！')

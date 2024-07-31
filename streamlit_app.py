@@ -71,7 +71,7 @@ if st.button('スーパーレアガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10,30)
+    owndamage = np.random.randint(10,25)
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
@@ -82,7 +82,7 @@ if st.button('超スーパーレアガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10,30)
+    owndamage = np.random.randint(10,25)
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 

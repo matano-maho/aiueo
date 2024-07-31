@@ -39,7 +39,7 @@ if 'is_answered' not in st.session_state:
 
 # タイトルと説明
 st.title('ことわざバトル')
-st.write('ことわざをランダムに表示して、勉強をサポートします！')
+st.write('レアリティの高いガチャを引くことで相手に高いダメージを与えられます！ガチャを引くごとに相手からダメージを受けるので注意！')
 
 if st.button('ノーマルガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'N']
@@ -49,6 +49,8 @@ if st.button('ノーマルガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
+    owndamage = np.random.randint(10,30)
+    st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
 if st.button('レアガチャを引く！'):
@@ -58,6 +60,8 @@ if st.button('レアガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
+    owndamage = np.random.randint(10,30)
+    st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
 if st.button('スーパーレアガチャを引く！'):
@@ -67,6 +71,8 @@ if st.button('スーパーレアガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
+    owndamage = np.random.randint(10,30)
+    st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
 if st.button('超スーパーレアガチャを引く！'):
@@ -76,6 +82,8 @@ if st.button('超スーパーレアガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
+    owndamage = np.random.randint(10,30)
+    st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
 
@@ -99,17 +107,14 @@ if st.session_state.selected_word is not None:
                 elif rarity == 'SR':
                     damage = np.random.randint(20, 45)
                 elif rarity == 'SSR':
-                    damage = np.random.randint(40, 55)
-                owndamage = np.random.randint(10,30)
+                    damage = np.random.randint(40, 55)                
                 st.session_state.point1 -= damage
-                st.session_state.point2 -= owndamage
                 st.session_state.last_rarity = rarity
                 st.session_state.is_answered = True
             else:
                 st.error("違います。")
                 st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
-                owndamage = np.random.randint(10,30)
-                st.session_state.point2 -= owndamage
+                owndamage = np.random.randint(10,30)                
                 st.session_state.is_answered = True
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")

@@ -45,11 +45,10 @@ if st.button('ノーマルガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'N']
     selected_word = subset_df.sample().iloc[0]
 
-    # セッションステートに選択されたことわざを保存
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10,30)
+    owndamage = np.random.randint(10, 30)
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
@@ -60,7 +59,7 @@ if st.button('レアガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10,30)
+    owndamage = np.random.randint(10, 30)
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
@@ -71,7 +70,7 @@ if st.button('スーパーレアガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10,25)
+    owndamage = np.random.randint(10, 25)
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
@@ -82,17 +81,15 @@ if st.button('超スーパーレアガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10,25)
+    owndamage = np.random.randint(10, 25)
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
-
-
 
 # ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
 
-    user_input = st.text_input("ことわざを入力してください(ひらがなでお願いします):")
+    user_input = st.text_input("ことわざを入力してください(ひらがなでお願いします):", key='user_input')
 
     if st.button('正誤判定をする'):
         if not st.session_state.is_answered:
@@ -107,16 +104,17 @@ if st.session_state.selected_word is not None:
                 elif rarity == 'SR':
                     damage = np.random.randint(20, 45)
                 elif rarity == 'SSR':
-                    damage = np.random.randint(40, 55)                
+                    damage = np.random.randint(40, 55)
                 st.session_state.point1 -= damage
                 st.session_state.last_rarity = rarity
                 st.session_state.is_answered = True
             else:
                 st.error("違います。")
                 st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
-                owndamage = np.random.randint(10,30)                
+                owndamage = np.random.randint(10, 30)
                 st.session_state.is_answered = True
 
+            # 正誤判定後に入力内容をクリア
             st.session_state.user_input = ""
 
         else:
@@ -157,4 +155,5 @@ if st.session_state.selected_word is not None:
         if st.button('もう一度戦う'):
             st.session_state.point1 = 150
             st.session_state.point2 = 150
+
 

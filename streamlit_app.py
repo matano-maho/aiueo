@@ -116,6 +116,9 @@ if st.session_state.selected_word is not None:
                 st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
                 owndamage = np.random.randint(10,30)                
                 st.session_state.is_answered = True
+
+            st.session_state.user_input = ""
+
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
 

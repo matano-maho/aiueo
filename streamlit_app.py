@@ -26,10 +26,10 @@ if 'display_meaning' not in st.session_state:
     st.session_state.display_meaning = False
 
 if 'point1' not in st.session_state:
-    st.session_state.point1 = 0
+    st.session_state.point1 = 150
 
 if 'point2' not in st.session_state:
-    st.session_state.point2 = 0
+    st.session_state.point2 = 150
 
 if 'last_rarity' not in st.session_state:
     st.session_state.last_rarity = None
@@ -78,8 +78,7 @@ if st.button('超スーパーレアガチャを引く！'):
     st.session_state.history.append(selected_word)
     st.session_state.is_answered = False
 
-st.session_state.point1 = 150
-st.session_state.point2 = 150
+
 
 # ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:

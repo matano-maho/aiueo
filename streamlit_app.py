@@ -15,6 +15,9 @@ words_df = load_data()
 damage = -1
 
 # ガチャ結果の履歴を保持するリスト
+if 'history' not in st.session_state:
+    st.session_state.history = []
+
 if 'selected_word' not in st.session_state:
     st.session_state.selected_word = None
 
@@ -103,19 +106,21 @@ if st.session_state.selected_word is not None:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
 
     if damage == -1:
-        damagecoment = st.write ()
-    if damage == 0:
-        damagecoment = st.write('残念！あなたはダメージを与えられなかった')
+        damagecoment = ""
+    elif damage == 0:
+        damagecoment = '残念！あなたはダメージを与えられなかった'
     elif damage <= 10:
-        damagecoment = st.write('相手にかすり傷を与えた')
+        damagecoment = '相手にかすり傷を与えた'
     elif damage <= 45:
-        damagecoment = st.write('相手にそこそこのダメージを与えた')
+        damagecoment = '相手にそこそこのダメージを与えた'
     elif damage <= 55:
-        damagecoment = st.write('相手に大ダメージを与えた')
+        damagecoment = '相手に大ダメージを与えた'
+    
     st.write(damagecoment)
     st.write(f"相手の体力: {st.session_state.point}")
 
     if st.session_state.point <= 0:
         st.write('敵を倒した！')
         st.session_state.point = 150
+
 

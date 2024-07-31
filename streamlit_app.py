@@ -26,10 +26,10 @@ if 'display_meaning' not in st.session_state:
     st.session_state.display_meaning = False
 
 if 'point1' not in st.session_state:
-    st.session_state.point = 0
+    st.session_state.point1 = 0
 
 if 'point2' not in st.session_state:
-    st.session_state.point = 0
+    st.session_state.point2 = 0
 
 if 'last_rarity' not in st.session_state:
     st.session_state.last_rarity = None

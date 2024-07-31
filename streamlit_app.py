@@ -128,7 +128,10 @@ if st.session_state.selected_word is not None:
     st.write(damagecoment)
     st.write(f"相手の体力: {st.session_state.point1}")
 
-    st.write('自分は'+str(owndamage)+'のダメージを受けた')
+    if owndamage == 0:
+        st.write("")
+    elif owndamage > 0:
+        st.write('自分は'+str(owndamage)+'のダメージを受けた')
 
     if st.session_state.point1 <= 0:
         st.write('敵を倒した！')

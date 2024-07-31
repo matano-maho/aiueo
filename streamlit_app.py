@@ -37,6 +37,9 @@ if 'last_rarity' not in st.session_state:
 if 'is_answered' not in st.session_state:
     st.session_state.is_answered = False
 
+if 'user_input' not in st.session_state:
+    st.session_state.user_input = ""
+
 # タイトルと説明
 st.title('ことわざバトル')
 st.write('レアリティの高い、答えるのが難しいことわざガチャを引くことで相手に高いダメージを与えられます！ガチャを引くごとに、相手からダメージを受けるので注意！')
@@ -89,7 +92,7 @@ if st.button('超スーパーレアガチャを引く！'):
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
 
-    user_input = st.text_input("ことわざを入力してください(ひらがなでお願いします):", key='user_input')
+    user_input = st.text_input("ことわざを入力してください(ひらがなでお願いします):", value=st.session_state.user_input, key='user_input_key')
 
     if st.button('正誤判定をする'):
         if not st.session_state.is_answered:
@@ -155,5 +158,6 @@ if st.session_state.selected_word is not None:
         if st.button('もう一度戦う'):
             st.session_state.point1 = 150
             st.session_state.point2 = 150
+
 
 

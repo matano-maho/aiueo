@@ -13,6 +13,7 @@ def load_data():
 
 words_df = load_data()
 damage = -1
+owndamage = 0
 
 # ガチャ結果の履歴を保持するリスト
 if 'history' not in st.session_state:
@@ -24,7 +25,10 @@ if 'selected_word' not in st.session_state:
 if 'display_meaning' not in st.session_state:
     st.session_state.display_meaning = False
 
-if 'point' not in st.session_state:
+if 'point1' not in st.session_state:
+    st.session_state.point = 0
+
+if 'point2' not in st.session_state:
     st.session_state.point = 0
 
 if 'last_rarity' not in st.session_state:
@@ -94,13 +98,16 @@ if st.session_state.selected_word is not None:
                     damage = np.random.randint(20, 45)
                 elif rarity == 'SSR':
                     damage = np.random.randint(40, 55)
-
-                st.session_state.point -= damage
+                owndamage = np.random.randint(10,30)
+                st.session_state.point1 -= damage
+                st.session_state.point2 -= owndamage
                 st.session_state.last_rarity = rarity
                 st.session_state.is_answered = True
             else:
                 st.error("違います。")
                 st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
+                owndamage = np.random.randint(10,30)
+                st.session_state.point2 -= owndamage
                 st.session_state.is_answered = True
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
@@ -110,17 +117,19 @@ if st.session_state.selected_word is not None:
     elif damage == 0:
         damagecoment = '残念！あなたはダメージを与えられなかった'
     elif damage <= 10:
-        damagecoment = '相手にかすり傷を与えた'
+        damagecoment = '相手に'+damage+'ダメージ！かすり傷を与えた'
+    elif damage <= 35:
+        damagecoment = '相手に'+damage+'ダメージ！そこそこのダメージを与えた'
     elif damage <= 45:
-        damagecoment = '相手にそこそこのダメージを与えた'
-    elif damage <= 55:
-        damagecoment = '相手に大ダメージを与えた'
+        damagecoment = '相手に'+damage+'ダメージ！大ダメージを与えた'
     
     st.write(damagecoment)
-    st.write(f"相手の体力: {st.session_state.point}")
+    st.write(f"相手の体力: {st.session_state.point1}")
 
-    if st.session_state.point <= 0:
+    st.write('自分は'+owndamage+'のダメージを受けた')
+
+    if st.session_state.point1 <= 0:
         st.write('敵を倒した！')
-        st.session_state.point = 150
+        st.session_state.point1 = 150
 
 

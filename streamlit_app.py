@@ -79,6 +79,7 @@ if st.button('超スーパーレアガチャを引く！'):
     st.session_state.is_answered = False
 
 st.session_state.point1 = 150
+st.session_state.point2 = 150
 
 # ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
@@ -135,6 +136,14 @@ if st.session_state.selected_word is not None:
 
     if st.session_state.point1 <= 0:
         st.write('敵を倒した！')
-        st.session_state.point1 = 150
+        if st.buton('もう一度戦う'):
+            st.session_state.point1 = 150
+            st.session_state.point2 = 150
+
+    if st.session_state.point2 <= 0:
+        st.write('あなたは倒れてしまった')
+        if st.buton('もう一度戦う'):
+            st.session_state.point1 = 150
+            st.session_state.point2 = 150
 
 

@@ -137,13 +137,13 @@ if st.session_state.selected_word is not None:
 
     if st.session_state.point1 <= 0:
         st.write('敵を倒した！')
-        if st.buton('もう一度戦う'):
+        if st.button('もう一度戦う'):
             st.session_state.point1 = 150
             st.session_state.point2 = 150
 
     if st.session_state.point2 <= 0:
         st.write('あなたは倒れてしまった')
-        if st.buton('もう一度戦う'):
+        if st.button('もう一度戦う'):
             st.session_state.point1 = 150
             st.session_state.point2 = 150
 

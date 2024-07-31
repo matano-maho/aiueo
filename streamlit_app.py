@@ -131,10 +131,10 @@ if st.session_state.selected_word is not None:
 
     if owndamage == 0:
         st.write("")
-        st.write(f"相手の体力: {st.session_state.point2}")
+        st.write(f"自分の体力: {st.session_state.point2}")
     elif owndamage > 0:
         st.write('自分は'+str(owndamage)+'のダメージを受けた')
-        st.write(f"相手の体力: {st.session_state.point2}")
+        st.write(f"自分の体力: {st.session_state.point2}")
 
     if st.session_state.point1 <= 0:
         st.write('敵を倒した！')

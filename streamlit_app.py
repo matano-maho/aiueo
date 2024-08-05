@@ -17,6 +17,9 @@ words_df = load_data()
 if 'history' not in st.session_state:
     st.session_state.history = []
 
+if 'show_rules' not in st.session_state:
+    st.session_state.show_rules = True
+
 if 'selected_word' not in st.session_state:
     st.session_state.selected_word = None
 
@@ -40,28 +43,29 @@ if 'user_input' not in st.session_state:
 
 # タイトルと説明
 st.title('ことわざバトル')
-st.write('レアリティの高い、答えるのが難しいことわざガチャを引くことで相手に高いダメージを与えられます！ガチャを引くごとに、相手からダメージを受けるので注意！')
-
+st.write('ことわざクイズに正解して敵を倒そう！')
 damage = -1
 owndamage = 0
+
+if st.button('ルール説明'):
+    st.session_state.show_rules = True
+
+if st.session_state.show_rules:
+    st.write('それぞれのガチャを引くと自分が10~20ダメージを受けます。')
+    st.write('レアリティが高くなるほどことわざクイズの難易度が難しくなりますが敵に与えるダメージも多くなります。')
+    st.write('問題を正解するとノーマルガチャは0~25ダメージ、レアガチャは20~45ダメージ、スーパーレアガチャは40~55ダメージ敵に与えます。')
+    st.write('回復ガチャを引くと10~20回復しますが、その後のクイズに不正解すると大ダメージを食らってしまいます。(問題の難易度は一番簡単です)')
+    st.write('自分の体力がなくなる前に敵の体力を0にすれば勝ちです。それでは頑張ってください！')
+
+    # ルール説明を閉じるボタン
+    if st.button('ルール説明を閉じる'):
+        st.session_state.show_rules = False
 
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
 # ガチャボタンの処理
+
 with col1:
-    if st.button('回復ガチャを引く！'):
-        subset_df = words_df[words_df['レア度'] == 'N']
-        selected_word = subset_df.sample().iloc[0]
-
-        st.session_state.selected_word = selected_word
-        st.session_state.display_meaning = False
-        st.session_state.history.append(selected_word)
-        owndamage = np.random.randint(10, 20)
-        st.session_state.point2 += owndamage
-        st.session_state.is_answered = False
-        st.session_state.user_input = ""
-
-with col2:
     if st.button('ノーマルガチャを引く！'):
         subset_df = words_df[words_df['レア度'] == 'R']
         selected_word = subset_df.sample().iloc[0]
@@ -69,12 +73,12 @@ with col2:
         st.session_state.selected_word = selected_word
         st.session_state.display_meaning = False
         st.session_state.history.append(selected_word)
-        owndamage = np.random.randint(10, 30)
+        owndamage = np.random.randint(10, 25)
         st.session_state.point2 -= owndamage
         st.session_state.is_answered = False
         st.session_state.user_input = ""
 
-with col3:
+with col2:
     if st.button('レアガチャを引く！'):
         subset_df = words_df[words_df['レア度'] == 'SR']
         selected_word = subset_df.sample().iloc[0]
@@ -87,7 +91,7 @@ with col3:
         st.session_state.is_answered = False
         st.session_state.user_input = ""
 
-with col4:
+with col3:
     if st.button('スーパーレアガチャを引く！'):
         subset_df = words_df[words_df['レア度'] == 'SSR']
         selected_word = subset_df.sample().iloc[0]
@@ -99,6 +103,20 @@ with col4:
         st.session_state.point2 -= owndamage
         st.session_state.is_answered = False
         st.session_state.user_input = ""
+
+with col4:
+    if st.button('回復ガチャを引く！'):
+        subset_df = words_df[words_df['レア度'] == 'N']
+        selected_word = subset_df.sample().iloc[0]
+
+        st.session_state.selected_word = selected_word
+        st.session_state.display_meaning = False
+        st.session_state.history.append(selected_word)
+        owndamage = np.random.randint(10, 20)
+        st.session_state.point2 += owndamage
+        st.session_state.is_answered = False
+        st.session_state.user_input = ""
+
 
 # ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
@@ -145,17 +163,17 @@ elif damage == 0:
     damagecoment = '残念！あなたはダメージを与えられなかった'
     st.session_state.point1 -= damage
 elif damage <= 10:
-    damagecoment = '相手に' + str(damage) + 'ダメージ！かすり傷を与えた'
+    damagecoment = '敵に' + str(damage) + 'ダメージ！かすり傷を与えた'
     st.session_state.point1 -= damage
 elif damage <= 35:
-    damagecoment = '相手に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
+    damagecoment = '敵に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
     st.session_state.point1 -= damage
 elif damage <= 45:
-    damagecoment = '相手に' + str(damage) + 'ダメージ！大ダメージを与えた'
+    damagecoment = '敵に' + str(damage) + 'ダメージ！大ダメージを与えた'
     st.session_state.point1 -= damage
     
 st.write(damagecoment)
-st.write(f"相手の体力: {st.session_state.point1}")
+st.write(f"敵の体力: {st.session_state.point1}")
 
 # 自分の体力に関する表示
 if st.session_state.selected_word is not None:

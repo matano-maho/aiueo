@@ -44,54 +44,61 @@ st.write('レアリティの高い、答えるのが難しいことわざガチ�
 
 damage = -1
 owndamage = 0
+
+col1, col2, col3, col4 = st.columns(4)
+
 # ガチャボタンの処理
-if st.button('回復ガチャを引く！'):
-    subset_df = words_df[words_df['レア度'] == 'N']
-    selected_word = subset_df.sample().iloc[0]
+with col1:
+    if st.button('回復ガチャを引く！'):
+        subset_df = words_df[words_df['レア度'] == 'N']
+        selected_word = subset_df.sample().iloc[0]
 
-    st.session_state.selected_word = selected_word
-    st.session_state.display_meaning = False
-    st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10, 20)
-    st.session_state.point2 += owndamage
-    st.session_state.is_answered = False
-    st.session_state.user_input = ""
+        st.session_state.selected_word = selected_word
+        st.session_state.display_meaning = False
+        st.session_state.history.append(selected_word)
+        owndamage = np.random.randint(10, 20)
+        st.session_state.point2 += owndamage
+        st.session_state.is_answered = False
+        st.session_state.user_input = ""
 
-if st.button('ノーマルガチャを引く！'):
-    subset_df = words_df[words_df['レア度'] == 'R']
-    selected_word = subset_df.sample().iloc[0]
+with col2:
+    if st.button('ノーマルガチャを引く！'):
+        subset_df = words_df[words_df['レア度'] == 'R']
+        selected_word = subset_df.sample().iloc[0]
 
-    st.session_state.selected_word = selected_word
-    st.session_state.display_meaning = False
-    st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10, 30)
-    st.session_state.point2 -= owndamage
-    st.session_state.is_answered = False
-    st.session_state.user_input = ""
+        st.session_state.selected_word = selected_word
+        st.session_state.display_meaning = False
+        st.session_state.history.append(selected_word)
+        owndamage = np.random.randint(10, 30)
+        st.session_state.point2 -= owndamage
+        st.session_state.is_answered = False
+        st.session_state.user_input = ""
 
-if st.button('レアガチャを引く！'):
-    subset_df = words_df[words_df['レア度'] == 'SR']
-    selected_word = subset_df.sample().iloc[0]
+with col3:
+    if st.button('レアガチャを引く！'):
+        subset_df = words_df[words_df['レア度'] == 'SR']
+        selected_word = subset_df.sample().iloc[0]
 
-    st.session_state.selected_word = selected_word
-    st.session_state.display_meaning = False
-    st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10, 25)
-    st.session_state.point2 -= owndamage
-    st.session_state.is_answered = False
-    st.session_state.user_input = ""
+        st.session_state.selected_word = selected_word
+        st.session_state.display_meaning = False
+        st.session_state.history.append(selected_word)
+        owndamage = np.random.randint(10, 25)
+        st.session_state.point2 -= owndamage
+        st.session_state.is_answered = False
+        st.session_state.user_input = ""
 
-if st.button('スーパーレアガチャを引く！'):
-    subset_df = words_df[words_df['レア度'] == 'SSR']
-    selected_word = subset_df.sample().iloc[0]
+with col4:
+    if st.button('スーパーレアガチャを引く！'):
+        subset_df = words_df[words_df['レア度'] == 'SSR']
+        selected_word = subset_df.sample().iloc[0]
 
-    st.session_state.selected_word = selected_word
-    st.session_state.display_meaning = False
-    st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10, 25)
-    st.session_state.point2 -= owndamage
-    st.session_state.is_answered = False
-    st.session_state.user_input = ""
+        st.session_state.selected_word = selected_word
+        st.session_state.display_meaning = False
+        st.session_state.history.append(selected_word)
+        owndamage = np.random.randint(10, 25)
+        st.session_state.point2 -= owndamage
+        st.session_state.is_answered = False
+        st.session_state.user_input = ""
 
 # ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
@@ -177,3 +184,4 @@ if st.session_state.point2 <= 0:
     if st.button('もう一度戦う'):
         st.session_state.point1 = 150
         st.session_state.point2 = 150
+

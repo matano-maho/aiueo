@@ -51,8 +51,8 @@ if st.button('回復ガチャを引く！'):
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(-20, -10)
-    st.session_state.point2 -= owndamage
+    owndamage = np.random.randint(10, 20)
+    st.session_state.point2 += owndamage
     st.session_state.is_answered = False
     # 正誤判定後に入力内容をクリア
     st.session_state.user_input = ""
@@ -124,6 +124,7 @@ if st.session_state.selected_word is not None:
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
                     damage = np.random.randint(26,50)
+                    st.session_state.point2 -= owndamage
                 st.session_state.is_answered = True
 
         else:
@@ -144,19 +145,18 @@ elif damage <= 45:
 st.write(damagecoment)
 st.write(f"相手の体力: {st.session_state.point1}")
 
-if owndamage == 0:
-    st.write("")
-    st.write(f"自分の体力: {st.session_state.point2}")
-elif owndamage >= 26:
-    st.write('自分は'+str(owndamage)+'の大ダメージを受けた...')
-elif owndamage > 0:
-    st.write('自分は'+str(owndamage)+'ダメージを受けた')
-    st.write(f"自分の体力: {st.session_state.point2}")
-elif owndamage < 0:
-    ownkaifuku = owndamage * -1
-    st.write('自分は'+str(ownkaifuku)+'回復した')
-    st.write
-
+rarity = st.session_state.selected_word['レア度']
+if rarity == 'N':
+    st.write('自分は'+str(owndamage)+'回復した')
+else:
+    if owndamage == 0:
+        st.write("")
+    elif owndamage >= 26:
+        st.write('自分は'+str(owndamage)+'の大ダメージを受けた...')
+    elif owndamage > 0:
+        st.write('自分は'+str(owndamage)+'ダメージを受けた')
+        
+st.write(f"自分の体力: {st.session_state.point2}")
 
 if st.session_state.point1 <= 0:
     st.write('敵を倒した！')

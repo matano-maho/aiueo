@@ -108,7 +108,7 @@ if st.session_state.selected_word is not None:
                 st.success("正解です！")
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
-                    damage = np.random.randint(0, -16)
+                    damage = np.random.randint(0, 16)
                 elif rarity == 'R':
                     damage = np.random.randint(10, 25)
                 elif rarity == 'SR':

@@ -88,7 +88,6 @@ if st.button('超スーパーレアガチャを引く！'):
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
 
-# ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
 
@@ -121,6 +120,7 @@ if st.session_state.selected_word is not None:
 
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
+
 
 damagecoment = ""
 if damage == -1:

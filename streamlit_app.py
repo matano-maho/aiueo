@@ -113,8 +113,7 @@ with col4:
         st.session_state.selected_word = selected_word
         st.session_state.display_meaning = False
         st.session_state.history.append(selected_word)
-        owndamage = np.random.randint(10, 20)
-        st.session_state.point2 += owndamage
+        
         st.session_state.is_answered = False
         st.session_state.user_input = ""
 
@@ -132,6 +131,8 @@ if st.session_state.selected_word is not None:
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
                     damage = -1
+                    owndamage = np.random.randint(10, 20)
+                    st.session_state.point2 += owndamage
                 elif rarity == 'R':
                     damage = np.random.randint(0, 25)
                 elif rarity == 'SR':

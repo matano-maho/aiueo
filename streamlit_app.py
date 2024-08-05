@@ -98,10 +98,9 @@ if st.session_state.selected_word is not None:
         if not st.session_state.is_answered:
             if user_input == st.session_state.selected_word['ことわざの読み方']:
                 st.success("正解です！")
-
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
-                    damage = np.random.randint(0, 16)
+                    damage = np.random.randint(0, -16)
                 elif rarity == 'R':
                     damage = np.random.randint(10, 25)
                 elif rarity == 'SR':
@@ -123,41 +122,41 @@ if st.session_state.selected_word is not None:
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
 
+damagecoment = ""
+if damage == -1:
     damagecoment = ""
-    if damage == -1:
-        damagecoment = ""
-    elif damage == 0:
-        damagecoment = '残念！あなたはダメージを与えられなかった'
-    elif damage <= 10:
-        damagecoment = '相手に'+str(damage)+'ダメージ！かすり傷を与えた'
-    elif damage <= 35:
-        damagecoment = '相手に'+str(damage)+'ダメージ！そこそこのダメージを与えた'
-    elif damage <= 45:
-        damagecoment = '相手に'+str(damage)+'ダメージ！大ダメージを与えた'
+elif damage == 0:
+    damagecoment = '残念！あなたはダメージを与えられなかった'
+elif damage <= 10:
+    damagecoment = '相手に'+str(damage)+'ダメージ！かすり傷を与えた'
+elif damage <= 35:
+    damagecoment = '相手に'+str(damage)+'ダメージ！そこそこのダメージを与えた'
+elif damage <= 45:
+    damagecoment = '相手に'+str(damage)+'ダメージ！大ダメージを与えた'
     
-    st.write(damagecoment)
-    st.write(f"相手の体力: {st.session_state.point1}")
+st.write(damagecoment)
+st.write(f"相手の体力: {st.session_state.point1}")
 
-    if owndamage == 0:
-        st.write("")
-        st.write(f"自分の体力: {st.session_state.point2}")
-    elif owndamage > 0:
-        st.write('自分は'+str(owndamage)+'のダメージを受けた')
-        st.write(f"自分の体力: {st.session_state.point2}")
+if owndamage == 0:
+    st.write("")
+    st.write(f"自分の体力: {st.session_state.point2}")
+elif owndamage > 0:
+    st.write('自分は'+str(owndamage)+'のダメージを受けた')
+    st.write(f"自分の体力: {st.session_state.point2}")
 
-    if st.session_state.point1 <= 0:
-        st.write('敵を倒した！')
-        st.session_state.point1 = 0
-        if st.button('もう一度戦う'):
-            st.session_state.point1 = 150
-            st.session_state.point2 = 150
+if st.session_state.point1 <= 0:
+    st.write('敵を倒した！')
+    st.session_state.point1 = 0
+    if st.button('もう一度戦う'):
+        st.session_state.point1 = 150
+        st.session_state.point2 = 150
 
-    if st.session_state.point2 <= 0:
-        st.write('あなたは倒れてしまった')
-        st.session_state.point2 = 0
-        if st.button('もう一度戦う'):
-            st.session_state.point1 = 150
-            st.session_state.point2 = 150
+if st.session_state.point2 <= 0:
+    st.write('あなたは倒れてしまった')
+    st.session_state.point2 = 0
+    if st.button('もう一度戦う'):
+        st.session_state.point1 = 150
+        st.session_state.point2 = 150
 
 
 

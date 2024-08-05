@@ -209,13 +209,13 @@ st.write(f"自分の体力: {st.session_state.point2}")
 
 # 勝敗の判定
 if st.session_state.point1 <= 0:
-    st.write("敵を倒しました！おめでとうございます！")
+    st.write("敵を倒した！")
     if st.button('もう一度戦う'):
         st.session_state.point1 = 150
         st.session_state.point2 = 150
 
 if st.session_state.point2 <= 0:
-    st.write("自分が負けました。ゲームオーバーです。")
+    st.write("ゲームオーバー...")
     if st.button('もう一度戦う'):
         st.session_state.point1 = 150
         st.session_state.point2 = 150

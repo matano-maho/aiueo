@@ -42,6 +42,8 @@ if 'user_input' not in st.session_state:
 st.title('ことわざバトル')
 st.write('レアリティの高い、答えるのが難しいことわざガチャを引くことで相手に高いダメージを与えられます！ガチャを引くごとに、相手からダメージを受けるので注意！')
 
+damage = -1
+owndamage = 0
 # ガチャボタンの処理
 if st.button('回復ガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'N']

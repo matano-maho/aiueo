@@ -147,7 +147,10 @@ st.write(f"相手の体力: {st.session_state.point1}")
 
 rarity = st.session_state.selected_word['レア度']
 if rarity == 'N':
-    st.write('自分は'+str(owndamage)+'回復した')
+    if owndamage == 0:
+        st.write("")
+    else:
+        st.write('自分は'+str(owndamage)+'回復した')
 else:
     if owndamage == 0:
         st.write("")

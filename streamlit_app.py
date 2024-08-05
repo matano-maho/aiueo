@@ -61,6 +61,8 @@ if st.session_state.show_rules:
     if st.button('ルール説明を閉じる'):
         st.session_state.show_rules = False
 
+st.write("\n" * 2)  # 空白を3行追加
+
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
 # ガチャボタンの処理

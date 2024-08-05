@@ -105,14 +105,14 @@ if st.session_state.selected_word is not None:
                 st.success("正解です！")
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
-                    damage = np.random.randint(0, 16)
+                    damage = -1
                 elif rarity == 'R':
-                    damage = np.random.randint(10, 25)
+                    damage = np.random.randint(0, 25)
                 elif rarity == 'SR':
                     damage = np.random.randint(20, 45)
                 elif rarity == 'SSR':
                     damage = np.random.randint(40, 55)
-                st.session_state.point1 -= damage
+                
                 st.session_state.last_rarity = rarity
                 st.session_state.is_answered = True
             else:
@@ -136,12 +136,16 @@ if damage == -1:
     damagecoment = ""
 elif damage == 0:
     damagecoment = '残念！あなたはダメージを与えられなかった'
+    st.session_state.point1 -= damage
 elif damage <= 10:
     damagecoment = '相手に' + str(damage) + 'ダメージ！かすり傷を与えた'
+    st.session_state.point1 -= damage
 elif damage <= 35:
     damagecoment = '相手に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
+    st.session_state.point1 -= damage
 elif damage <= 45:
     damagecoment = '相手に' + str(damage) + 'ダメージ！大ダメージを与えた'
+    st.session_state.point1 -= damage
     
 st.write(damagecoment)
 st.write(f"相手の体力: {st.session_state.point1}")

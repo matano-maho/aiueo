@@ -12,8 +12,10 @@ def load_data():
     return df
 
 words_df = load_data()
+damage = -1
+owndamage = 0
 
-# Initialize session state variables
+# ガチャ結果の履歴を保持するリスト
 if 'history' not in st.session_state:
     st.session_state.history = []
 
@@ -38,13 +40,12 @@ if 'is_answered' not in st.session_state:
 if 'user_input' not in st.session_state:
     st.session_state.user_input = ""
 
-# Title and description
+# タイトルと説明
 st.title('ことわざバトル')
 st.write('レアリティの高い、答えるのが難しいことわざガチャを引くことで相手に高いダメージを与えられます！ガチャを引くごとに、相手からダメージを受けるので注意！')
 
-# Draw gacha buttons
-def draw_gacha(rarity):
-    subset_df = words_df[words_df['レア度'] == rarity]
+if st.button('ノーマルガチャを引く！'):
+    subset_df = words_df[words_df['レア度'] == 'N']
     selected_word = subset_df.sample().iloc[0]
 
     st.session_state.selected_word = selected_word
@@ -53,21 +54,49 @@ def draw_gacha(rarity):
     owndamage = np.random.randint(10, 30)
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
-    st.session_state.user_input = ""  # Clear user input
-
-if st.button('ノーマルガチャを引く！'):
-    draw_gacha('N')
+    # 正誤判定後に入力内容をクリア
+    st.session_state.user_input = ""
 
 if st.button('レアガチャを引く！'):
-    draw_gacha('R')
+    subset_df = words_df[words_df['レア度'] == 'R']
+    selected_word = subset_df.sample().iloc[0]
+
+    st.session_state.selected_word = selected_word
+    st.session_state.display_meaning = False
+    st.session_state.history.append(selected_word)
+    owndamage = np.random.randint(10, 30)
+    st.session_state.point2 -= owndamage
+    st.session_state.is_answered = False
+    # 正誤判定後に入力内容をクリア
+    st.session_state.user_input = ""
 
 if st.button('スーパーレアガチャを引く！'):
-    draw_gacha('SR')
+    subset_df = words_df[words_df['レア度'] == 'SR']
+    selected_word = subset_df.sample().iloc[0]
+
+    st.session_state.selected_word = selected_word
+    st.session_state.display_meaning = False
+    st.session_state.history.append(selected_word)
+    owndamage = np.random.randint(10, 25)
+    st.session_state.point2 -= owndamage
+    st.session_state.is_answered = False
+    # 正誤判定後に入力内容をクリア
+    st.session_state.user_input = ""
 
 if st.button('超スーパーレアガチャを引く！'):
-    draw_gacha('SSR')
+    subset_df = words_df[words_df['レア度'] == 'SSR']
+    selected_word = subset_df.sample().iloc[0]
 
-# Display meaning and handle user input
+    st.session_state.selected_word = selected_word
+    st.session_state.display_meaning = False
+    st.session_state.history.append(selected_word)
+    owndamage = np.random.randint(10, 25)
+    st.session_state.point2 -= owndamage
+    st.session_state.is_answered = False
+    # 正誤判定後に入力内容をクリア
+    st.session_state.user_input = ""
+
+# ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
 
@@ -95,13 +124,9 @@ if st.session_state.selected_word is not None:
                 owndamage = np.random.randint(10, 30)
                 st.session_state.is_answered = True
 
-            # Correct/incorrect judgment clears user input
-            st.session_state.user_input = ""
-
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
 
-# Display damage comment
 damagecoment = ""
 if damage == -1:
     damagecoment = ""
@@ -110,7 +135,7 @@ elif damage == 0:
 elif damage <= 10:
     damagecoment = '相手に'+str(damage)+'ダメージ！かすり傷を与えた'
 elif damage <= 35:
-    damagecoment = '相手に'+str(damage)+'ダメージ！そこそこダメージを与えた'
+    damagecoment = '相手に'+str(damage)+'ダメージ！そこそこのダメージを与えた'
 elif damage <= 45:
     damagecoment = '相手に'+str(damage)+'ダメージ！大ダメージを与えた'
     
@@ -124,7 +149,6 @@ elif owndamage > 0:
     st.write('自分は'+str(owndamage)+'のダメージを受けた')
     st.write(f"自分の体力: {st.session_state.point2}")
 
-# End game conditions
 if st.session_state.point1 <= 0:
     st.write('敵を倒した！')
     st.session_state.point1 = 0
@@ -138,7 +162,6 @@ if st.session_state.point2 <= 0:
     if st.button('もう一度戦う'):
         st.session_state.point1 = 150
         st.session_state.point2 = 150
-
 
 
 

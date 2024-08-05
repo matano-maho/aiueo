@@ -123,7 +123,7 @@ if st.session_state.selected_word is not None:
                 st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
-                    damage = np.random.randint(26,50)
+                    owndamage = np.random.randint(26,50)
                     st.session_state.point2 -= owndamage
                 st.session_state.is_answered = True
 

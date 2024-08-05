@@ -44,20 +44,20 @@ if 'user_input' not in st.session_state:
 st.title('ことわざバトル')
 st.write('レアリティの高い、答えるのが難しいことわざガチャを引くことで相手に高いダメージを与えられます！ガチャを引くごとに、相手からダメージを受けるので注意！')
 
-if st.button('ノーマルガチャを引く！'):
+if st.button('回復ガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'N']
     selected_word = subset_df.sample().iloc[0]
 
     st.session_state.selected_word = selected_word
     st.session_state.display_meaning = False
     st.session_state.history.append(selected_word)
-    owndamage = np.random.randint(10, 30)
+    owndamage = np.random.randint(-20, -10)
     st.session_state.point2 -= owndamage
     st.session_state.is_answered = False
     # 正誤判定後に入力内容をクリア
     st.session_state.user_input = ""
 
-if st.button('レアガチャを引く！'):
+if st.button('ノーマルガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'R']
     selected_word = subset_df.sample().iloc[0]
 
@@ -70,7 +70,7 @@ if st.button('レアガチャを引く！'):
     # 正誤判定後に入力内容をクリア
     st.session_state.user_input = ""
 
-if st.button('スーパーレアガチャを引く！'):
+if st.button('レアガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'SR']
     selected_word = subset_df.sample().iloc[0]
 
@@ -83,7 +83,7 @@ if st.button('スーパーレアガチャを引く！'):
     # 正誤判定後に入力内容をクリア
     st.session_state.user_input = ""
 
-if st.button('超スーパーレアガチャを引く！'):
+if st.button('スーパーレアガチャを引く！'):
     subset_df = words_df[words_df['レア度'] == 'SSR']
     selected_word = subset_df.sample().iloc[0]
 
@@ -100,7 +100,7 @@ if st.button('超スーパーレアガチャを引く！'):
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
 
-    user_input = st.text_input("ことわざを入力してください(ひらがなでお願いします):", value=st.session_state.user_input, key='user_input_key')
+    user_input = st.text_input("ことわざを入力してください(ひらがなでお願いします)", value=st.session_state.user_input, key='user_input_key')
 
     if st.button('正誤判定をする'):
         if not st.session_state.is_answered:
@@ -108,9 +108,9 @@ if st.session_state.selected_word is not None:
                 st.success("正解です！")
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
-                    damage = np.random.randint(0, 16)
+                    damage = -1
                 elif rarity == 'R':
-                    damage = np.random.randint(10, 25)
+                    damage = np.random.randint(0, 25)
                 elif rarity == 'SR':
                     damage = np.random.randint(20, 45)
                 elif rarity == 'SSR':
@@ -121,7 +121,9 @@ if st.session_state.selected_word is not None:
             else:
                 st.error("違います。")
                 st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
-                owndamage = np.random.randint(10, 30)
+                rarity = st.session_state.selected_word['レア度']
+                if rarity == 'N':
+                    damage = np.random.randint(26,50)
                 st.session_state.is_answered = True
 
         else:
@@ -145,9 +147,16 @@ st.write(f"相手の体力: {st.session_state.point1}")
 if owndamage == 0:
     st.write("")
     st.write(f"自分の体力: {st.session_state.point2}")
+elif owndamage >= 26:
+    st.write('自分は'+str(owndamage)+'の大ダメージを受けた...')
 elif owndamage > 0:
-    st.write('自分は'+str(owndamage)+'のダメージを受けた')
+    st.write('自分は'+str(owndamage)+'ダメージを受けた')
     st.write(f"自分の体力: {st.session_state.point2}")
+elif owndamage < 0:
+    ownkaifuku = owndamage * -1
+    st.write('自分は'+str(ownkaifuku)+'回復した')
+    st.write
+
 
 if st.session_state.point1 <= 0:
     st.write('敵を倒した！')

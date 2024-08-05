@@ -18,7 +18,7 @@ if 'history' not in st.session_state:
     st.session_state.history = []
 
 if 'show_rules' not in st.session_state:
-    st.session_state.show_rules = True
+    st.session_state.show_rules = False
 
 if 'selected_word' not in st.session_state:
     st.session_state.selected_word = None

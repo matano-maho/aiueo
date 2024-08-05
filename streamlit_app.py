@@ -45,8 +45,8 @@ st.write('レアリティの高い、答えるのが難しいことわざガチ�
 damage = -1
 owndamage = 0
 
-col1, col2, col3, col4 = st.columns(4)
-
+col1, col2 = st.columns(2)
+col3, col4 = st.columns(2)
 # ガチャボタンの処理
 with col1:
     if st.button('回復ガチャを引く！'):

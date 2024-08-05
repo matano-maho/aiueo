@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import time
 
 st.set_page_config(page_title="ことわざバトル")
 
@@ -42,20 +41,12 @@ if 'is_answered' not in st.session_state:
 if 'user_input' not in st.session_state:
     st.session_state.user_input = ""
 
-if 'last_heal_time' not in st.session_state:
-    st.session_state.last_heal_time = 0
-
-if 'can_draw' not in st.session_state:
-    st.session_state.can_draw = True
-
 # タイトルと説明
 st.title('ことわざバトル')
 st.write('ことわざクイズに正解して敵を倒そう！')
-
 damage = -1
 owndamage = 0
 
-# ルール説明ボタンと説明
 if st.button('ルール説明'):
     st.session_state.show_rules = True
 
@@ -70,15 +61,13 @@ if st.session_state.show_rules:
     if st.button('ルール説明を閉じる'):
         st.session_state.show_rules = False
 
-# 空白行を追加
-st.write("\n" * 3)  # 空白を3行追加
+st.write("\n" * 5)  # 空白を5行追加
 
-# ガチャボタンの処理
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
-
+# ガチャボタンの処理
 with col1:
-    if st.session_state.can_draw and st.button('ノーマルガチャを引く！'):
+    if st.button('ノーマルガチャを引く！'):
         subset_df = words_df[words_df['レア度'] == 'R']
         selected_word = subset_df.sample().iloc[0]
 
@@ -89,10 +78,9 @@ with col1:
         st.session_state.point2 -= owndamage
         st.session_state.is_answered = False
         st.session_state.user_input = ""
-        st.session_state.can_draw = False  # ガチャ引いた後に他のガチャボタンを無効にする
 
 with col2:
-    if st.session_state.can_draw and st.button('レアガチャを引く！'):
+    if st.button('レアガチャを引く！'):
         subset_df = words_df[words_df['レア度'] == 'SR']
         selected_word = subset_df.sample().iloc[0]
 
@@ -103,10 +91,9 @@ with col2:
         st.session_state.point2 -= owndamage
         st.session_state.is_answered = False
         st.session_state.user_input = ""
-        st.session_state.can_draw = False  # ガチャ引いた後に他のガチャボタンを無効にする
 
 with col3:
-    if st.session_state.can_draw and st.button('スーパーレアガチャを引く！'):
+    if st.button('スーパーレアガチャを引く！'):
         subset_df = words_df[words_df['レア度'] == 'SSR']
         selected_word = subset_df.sample().iloc[0]
 
@@ -117,26 +104,20 @@ with col3:
         st.session_state.point2 -= owndamage
         st.session_state.is_answered = False
         st.session_state.user_input = ""
-        st.session_state.can_draw = False  # ガチャ引いた後に他のガチャボタンを無効にする
 
 with col4:
-    current_time = time.time()
-    cooldown_duration = 10  # クールダウン時間（秒）
+    if st.button('回復ガチャを引く！'):
+        subset_df = words_df[words_df['レア度'] == 'N']
+        selected_word = subset_df.sample().iloc[0]
 
-    if st.session_state.can_draw and st.button('回復ガチャを引く！'):
-        if current_time - st.session_state.last_heal_time >= cooldown_duration:
-            subset_df = words_df[words_df['レア度'] == 'N']
-            selected_word = subset_df.sample().iloc[0]
+        st.session_state.selected_word = selected_word
+        st.session_state.display_meaning = False
+        st.session_state.history.append(selected_word)
+        owndamage = np.random.randint(10, 20)
+        st.session_state.point2 += owndamage
+        st.session_state.is_answered = False
+        st.session_state.user_input = ""
 
-            st.session_state.selected_word = selected_word
-            st.session_state.display_meaning = False
-            st.session_state.history.append(selected_word)
-            owndamage = np.random.randint(10, 20)
-            st.session_state.point2 += owndamage
-            st.session_state.last_heal_time = current_time  # 回復ガチャを引いた時間を記録
-            st.session_state.can_draw = False  # ガチャ引いた後に他のガチャボタンを無効にする
-        else:
-            st.warning("回復ガチャはクールダウン中です。もう少し待ってから再度試してください。")
 
 # ユーザーが選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
@@ -160,7 +141,6 @@ if st.session_state.selected_word is not None:
                 
                 st.session_state.last_rarity = rarity
                 st.session_state.is_answered = True
-                st.session_state.can_draw = True  # 正誤判定後に他のガチャボタンを有効にする
             else:
                 st.error("違います。")
                 st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
@@ -172,7 +152,6 @@ if st.session_state.selected_word is not None:
                     owndamage = np.random.randint(20, 50)
                     st.session_state.point2 -= owndamage
                 st.session_state.is_answered = True
-                st.session_state.can_draw = True  # 正誤判定後に他のガチャボタンを有効にする
 
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
@@ -212,13 +191,15 @@ st.write(f"自分の体力: {st.session_state.point2}")
 
 # 勝敗の判定
 if st.session_state.point1 <= 0:
-    st.write("敵を倒した！")
+    st.write('敵を倒した！')
+    st.session_state.point1 = 0
     if st.button('もう一度戦う'):
         st.session_state.point1 = 150
         st.session_state.point2 = 150
 
 if st.session_state.point2 <= 0:
-    st.write("ゲームオーバー...")
+    st.write('あなたは倒れてしまった')
+    st.session_state.point2 = 0
     if st.button('もう一度戦う'):
         st.session_state.point1 = 150
         st.session_state.point2 = 150

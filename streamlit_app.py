@@ -48,10 +48,11 @@ if 'user_input' not in st.session_state:
 st.title('ことわざバトル')
 st.write('ことわざクイズに正解して敵を倒そう！')
 
+damage = -1
+owndamage = -1
 
 def kotowazagacya():
-    damage = -1
-    owndamage = -1
+    
     if st.button('ルール説明'):
         st.session_state.show_rules = True
 

@@ -45,7 +45,7 @@ if 'user_input' not in st.session_state:
 st.title('ことわざバトル')
 st.write('ことわざクイズに正解して敵を倒そう！')
 damage = -1
-owndamage = 0
+owndamage = -1
 
 if st.button('ルール説明'):
     st.session_state.show_rules = True
@@ -177,7 +177,9 @@ st.write(f"敵の体力: {st.session_state.point1}")
 # 自分の体力に関する表示
 if st.session_state.selected_word is not None:
     rarity = st.session_state.selected_word['レア度']
-    if rarity == 'N':
+    if owndamage == -1:
+        pass
+    elif rarity == 'N':
         if owndamage >= 26:
             st.write('自分は' + str(owndamage) + 'の大ダメージを受けた...')
         elif owndamage > 0:

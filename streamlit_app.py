@@ -74,8 +74,6 @@ with col1:
         st.session_state.selected_word = selected_word
         st.session_state.display_meaning = False
         st.session_state.history.append(selected_word)
-        owndamage = np.random.randint(10, 25)
-        st.session_state.point2 -= owndamage
         st.session_state.is_answered = False
         st.session_state.user_input = ""
 
@@ -87,8 +85,6 @@ with col2:
         st.session_state.selected_word = selected_word
         st.session_state.display_meaning = False
         st.session_state.history.append(selected_word)
-        owndamage = np.random.randint(10, 25)
-        st.session_state.point2 -= owndamage
         st.session_state.is_answered = False
         st.session_state.user_input = ""
 
@@ -100,8 +96,7 @@ with col3:
         st.session_state.selected_word = selected_word
         st.session_state.display_meaning = False
         st.session_state.history.append(selected_word)
-        owndamage = np.random.randint(10, 25)
-        st.session_state.point2 -= owndamage
+        
         st.session_state.is_answered = False
         st.session_state.user_input = ""
 
@@ -140,6 +135,8 @@ if st.session_state.selected_word is not None:
                 elif rarity == 'SSR':
                     damage = np.random.randint(40, 55)
                 
+                owndamage = np.random.randint(10, 25)
+                st.session_state.point2 -= owndamage
                 st.session_state.last_rarity = rarity
                 st.session_state.is_answered = True
             else:
@@ -150,7 +147,7 @@ if st.session_state.selected_word is not None:
                     owndamage = np.random.randint(26, 50)
                     st.session_state.point2 -= owndamage
                 else:
-                    owndamage = np.random.randint(20, 50)
+                    owndamage = np.random.randint(10, 25)
                     st.session_state.point2 -= owndamage
                 st.session_state.is_answered = True
 
@@ -192,15 +189,15 @@ st.write(f"自分の体力: {st.session_state.point2}")
 
 # 勝敗の判定
 if st.session_state.point1 <= 0:
-    st.write('敵を倒した！')
     st.session_state.point1 = 0
+    st.write('敵を倒した！')
     if st.button('もう一度戦う'):
         st.session_state.point1 = 150
         st.session_state.point2 = 150
 
 if st.session_state.point2 <= 0:
-    st.write('あなたは倒れてしまった')
     st.session_state.point2 = 0
+    st.write('あなたは倒れてしまった')
     if st.button('もう一度戦う'):
         st.session_state.point1 = 150
         st.session_state.point2 = 150

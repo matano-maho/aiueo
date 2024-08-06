@@ -130,14 +130,20 @@ if st.session_state.selected_word is not None:
                     st.session_state.point2 += owndamage
                 elif rarity == 'R':
                     damage = np.random.randint(0, 25)
+                    owndamage = np.random.randint(10, 25)
+                    st.session_state.point1 -= damage
+                    st.session_state.point2 -= owndamage
                 elif rarity == 'SR':
                     damage = np.random.randint(20, 45)
+                    owndamage = np.random.randint(10, 25)
+                    st.session_state.point1 -= damage
+                    st.session_state.point2 -= owndamage
                 elif rarity == 'SSR':
                     damage = np.random.randint(40, 55)
+                    owndamage = np.random.randint(10, 25)
+                    st.session_state.point1 -= damage
+                    st.session_state.point2 -= owndamage
                 
-                owndamage = np.random.randint(10, 25)
-                st.session_state.point1 -= damage
-                st.session_state.point2 -= owndamage
                 st.session_state.last_rarity = rarity
                 st.session_state.is_answered = True
             else:

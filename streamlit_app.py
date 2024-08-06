@@ -113,7 +113,7 @@ with col4:
         st.session_state.user_input = ""
 
 
-# ユーザーが選択したことわざの意味を表示
+# 選択したことわざの意味を表示
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
 
@@ -155,7 +155,7 @@ if st.session_state.selected_word is not None:
         else:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
 
-# ダメージコメントの作成
+
 damagecoment = ""
 if damage == -1:
     damagecoment = ""
@@ -175,7 +175,6 @@ elif damage <= 45:
 st.write(damagecoment)
 st.write(f"敵の体力: {st.session_state.point1}")
 
-# 自分の体力に関する表示
 if st.session_state.selected_word is not None:
     rarity = st.session_state.selected_word['レア度']
     if owndamage == -1:

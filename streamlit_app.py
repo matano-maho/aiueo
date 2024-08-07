@@ -188,26 +188,27 @@ def kotowazagacya():
 
     st.write(f"自分の体力: {st.session_state.point2}")
 
+
+def result():
+    if st.session_state.point1 <= 0:
+        st.session_state.point1 = 0
+        st.write('敵を倒した！')
+        st.session_state.gacya = False
+        if st.button('もう一度戦う'):
+            st.session_state.gacya = True
+            st.session_state.point1 = 150
+            st.session_state.point2 = 150
+
+    if st.session_state.point2 <= 0:
+        st.session_state.point2 = 0
+        st.write('あなたは倒れてしまった')
+        st.session_state.gacya = False
+        if st.button('もう一度戦う'):
+            st.session_state.gacya = True
+            st.session_state.point1 = 150
+            st.session_state.point2 = 150
+
+result()
+
 if st.session_state.gacya:
     kotowazagacya()
-
-
-# 勝敗の判定
-if st.session_state.point1 <= 0:
-    st.session_state.point1 = 0
-    st.write('敵を倒した！')
-    st.session_state.gacya = False
-    if st.button('もう一度戦う'):
-        st.session_state.gacya = True
-        st.session_state.point1 = 150
-        st.session_state.point2 = 150
-
-if st.session_state.point2 <= 0:
-    st.session_state.point2 = 0
-    st.write('あなたは倒れてしまった')
-    st.session_state.gacya = False
-    if st.button('もう一度戦う'):
-        st.session_state.gacya = True
-        st.session_state.point1 = 150
-        st.session_state.point2 = 150
-

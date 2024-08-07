@@ -48,9 +48,11 @@ if 'user_input' not in st.session_state:
 st.title('ことわざバトル')
 st.write('ことわざクイズに正解して敵を倒そう！')
 
-global damage, owndamage  # グローバル変数として使用
-damage = -1  # 初期化
-owndamage = -1  # 初期化
+# グローバル変数として使用
+if 'damage' not in st.session_state:
+    st.session_state.damage = -1
+if 'owndamage' not in st.session_state:
+    st.session_state.owndamage = -1
 
 if st.button('ルール説明'):
     st.session_state.show_rules = True
@@ -70,7 +72,7 @@ st.write("\n" * 5)  # 空白を5行追加
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
 
-    # ガチャボタンの処理
+# ガチャボタンの処理
 with col1:
     if st.button('ノーマルガチャを引く！'):
         subset_df = words_df[words_df['レア度'] == 'R']
@@ -123,24 +125,24 @@ if st.session_state.selected_word is not None:
                 st.success("正解です！")
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
-                    damage = -1
-                    owndamage = np.random.randint(10, 20)
-                    st.session_state.point2 += owndamage
+                    st.session_state.damage = -1
+                    st.session_state.owndamage = np.random.randint(10, 20)
+                    st.session_state.point2 += st.session_state.owndamage
                 elif rarity == 'R':
-                    damage = np.random.randint(0, 25)
-                    owndamage = np.random.randint(10, 25)
-                    st.session_state.point1 -= damage
-                    st.session_state.point2 -= owndamage
+                    st.session_state.damage = np.random.randint(0, 25)
+                    st.session_state.owndamage = np.random.randint(10, 25)
+                    st.session_state.point1 -= st.session_state.damage
+                    st.session_state.point2 -= st.session_state.owndamage
                 elif rarity == 'SR':
-                    damage = np.random.randint(20, 45)
-                    owndamage = np.random.randint(10, 25)
-                    st.session_state.point1 -= damage
-                    st.session_state.point2 -= owndamage
+                    st.session_state.damage = np.random.randint(20, 45)
+                    st.session_state.owndamage = np.random.randint(10, 25)
+                    st.session_state.point1 -= st.session_state.damage
+                    st.session_state.point2 -= st.session_state.owndamage
                 elif rarity == 'SSR':
-                    damage = np.random.randint(40, 55)
-                    owndamage = np.random.randint(10, 25)
-                    st.session_state.point1 -= damage
-                    st.session_state.point2 -= owndamage
+                    st.session_state.damage = np.random.randint(40, 55)
+                    st.session_state.owndamage = np.random.randint(10, 25)
+                    st.session_state.point1 -= st.session_state.damage
+                    st.session_state.point2 -= st.session_state.owndamage
 
                 st.session_state.last_rarity = rarity
                 st.session_state.is_answered = True
@@ -149,31 +151,30 @@ if st.session_state.selected_word is not None:
                 st.write('正解は' + st.session_state.selected_word['ことわざ'] + 'です')
                 rarity = st.session_state.selected_word['レア度']
                 if rarity == 'N':
-                    owndamage = np.random.randint(26, 50)
-                    st.session_state.point2 -= owndamage
+                    st.session_state.owndamage = np.random.randint(26, 50)
+                    st.session_state.point2 -= st.session_state.owndamage
                 else:
-                    owndamage = np.random.randint(10, 25)
-                    st.session_state.point2 -= owndamage
+                    st.session_state.owndamage = np.random.randint(10, 25)
+                    st.session_state.point2 -= st.session_state.owndamage
                 st.session_state.is_answered = True
 
-        elif st.session_state.in_answered == True:
+        elif st.session_state.is_answered:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
-        elif st.session_state.gacya == True:
-            st.waruing('勝敗はつきました。まだゲームを続けたいときはもう一度戦うを押してください')
-
+        elif st.session_state.gacya:
+            st.warning('勝敗はつきました。まだゲームを続けたいときはもう一度戦うを押してください')
 
 damagecoment = ""
-if damage == -1:
+if st.session_state.damage == -1:
     damagecoment = ""
-elif damage == 0:
+elif st.session_state.damage == 0:
     damagecoment = '残念！あなたはダメージを与えられなかった'
-elif damage <= 10:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！かすり傷を与えた'
-elif damage <= 35:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
-elif damage <= 45:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！大ダメージを与えた'
-    
+elif st.session_state.damage <= 10:
+    damagecoment = '敵に' + str(st.session_state.damage) + 'ダメージ！かすり傷を与えた'
+elif st.session_state.damage <= 35:
+    damagecoment = '敵に' + str(st.session_state.damage) + 'ダメージ！そこそこのダメージを与えた'
+elif st.session_state.damage <= 45:
+    damagecoment = '敵に' + str(st.session_state.damage) + 'ダメージ！大ダメージを与えた'
+
 st.write(damagecoment)
 
 if st.session_state.point1 > 0:
@@ -182,7 +183,6 @@ elif st.session_state.point1 <= 0:
     st.session_state.point1 = 0
     st.write('敵を倒した！')
     st.session_state.gacya = False
-    st.session_state.gacya = False
     if st.button('もう一度戦う'):
         st.session_state.gacya = True
         st.session_state.point1 = 150
@@ -190,14 +190,14 @@ elif st.session_state.point1 <= 0:
 
 if st.session_state.selected_word is not None:
     rarity = st.session_state.selected_word['レア度']
-    if owndamage != -1:
+    if st.session_state.owndamage != -1:
         if rarity == 'N':
-            if owndamage >= 26:
-                st.write('自分は' + str(owndamage) + 'の大ダメージを受けた...')
-            elif owndamage > 0:
-                st.write('自分は' + str(owndamage) + '回復した')
+            if st.session_state.owndamage >= 26:
+                st.write('自分は' + str(st.session_state.owndamage) + 'の大ダメージを受けた...')
+            elif st.session_state.owndamage > 0:
+                st.write('自分は' + str(st.session_state.owndamage) + '回復した')
         else:
-            st.write('自分は' + str(owndamage) + 'ダメージを受けた')
+            st.write('自分は' + str(st.session_state.owndamage) + 'ダメージを受けた')
 
 if st.session_state.point2 > 0:
     st.write(f"自分の体力: {st.session_state.point2}")
@@ -209,7 +209,3 @@ elif st.session_state.point2 <= 0:
         st.session_state.gacya = True
         st.session_state.point1 = 150
         st.session_state.point2 = 150
-
-
-    
-

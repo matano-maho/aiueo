@@ -159,7 +159,7 @@ if st.session_state.selected_word is not None:
         elif st.session_state.is_answered == True:
             st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
         elif st.session_state.gacya == True:
-            st.waruing('勝敗はつきました。まだゲームを続けたいときはもう一度戦うを押してください')
+            st.warning('勝敗はつきました。まだゲームを続けたいときはもう一度戦うを押してください')
 
 
 damagecoment = ""

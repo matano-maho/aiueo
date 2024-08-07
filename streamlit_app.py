@@ -13,46 +13,35 @@ def load_data():
 
 words_df = load_data()
 
-# ガチャ結果の履歴を保持するリスト
+# Initialize session state variables
 if 'history' not in st.session_state:
     st.session_state.history = []
-
 if 'gacya' not in st.session_state:
     st.session_state.gacya = False
-
 if 'show_rules' not in st.session_state:
     st.session_state.show_rules = False
-
 if 'selected_word' not in st.session_state:
     st.session_state.selected_word = None
-
 if 'display_meaning' not in st.session_state:
     st.session_state.display_meaning = False
-
 if 'point1' not in st.session_state:
     st.session_state.point1 = 150
-
 if 'point2' not in st.session_state:
     st.session_state.point2 = 150
-
 if 'last_rarity' not in st.session_state:
     st.session_state.last_rarity = None
-
 if 'is_answered' not in st.session_state:
     st.session_state.is_answered = False
-
 if 'user_input' not in st.session_state:
     st.session_state.user_input = ""
-
-# タイトルと説明
-st.title('ことわざバトル')
-st.write('ことわざクイズに正解して敵を倒そう！')
-
-# グローバル変数として使用
 if 'damage' not in st.session_state:
     st.session_state.damage = -1
 if 'owndamage' not in st.session_state:
     st.session_state.owndamage = -1
+
+# Title and description
+st.title('ことわざバトル')
+st.write('ことわざクイズに正解して敵を倒そう！')
 
 if st.button('ルール説明'):
     st.session_state.show_rules = True
@@ -113,7 +102,7 @@ with col4:
         st.session_state.is_answered = False
         st.session_state.user_input = ""
 
-# 選択したことわざの意味を表示
+# Show the meaning of the selected proverb
 if st.session_state.selected_word is not None:
     st.header(f"意味: {st.session_state.selected_word['意味']}")
 
@@ -177,6 +166,7 @@ elif st.session_state.damage <= 45:
 
 st.write(damagecoment)
 
+# Check if the enemy is defeated
 if st.session_state.point1 > 0:
     st.write(f"敵の体力: {st.session_state.point1}")
 elif st.session_state.point1 <= 0:
@@ -184,21 +174,11 @@ elif st.session_state.point1 <= 0:
     st.write('敵を倒した！')
     st.session_state.gacya = True
     if st.button('もう一度戦う'):
-        st.session_state.gacya = False
         st.session_state.point1 = 150
         st.session_state.point2 = 150
+        st.session_state.gacya = False
 
-if st.session_state.selected_word is not None:
-    rarity = st.session_state.selected_word['レア度']
-    if st.session_state.owndamage != -1:
-        if rarity == 'N':
-            if st.session_state.owndamage >= 26:
-                st.write('自分は' + str(st.session_state.owndamage) + 'の大ダメージを受けた...')
-            elif st.session_state.owndamage > 0:
-                st.write('自分は' + str(st.session_state.owndamage) + '回復した')
-        else:
-            st.write('自分は' + str(st.session_state.owndamage) + 'ダメージを受けた')
-
+# Check if the player is defeated
 if st.session_state.point2 > 0:
     st.write(f"自分の体力: {st.session_state.point2}")
 elif st.session_state.point2 <= 0:
@@ -206,6 +186,7 @@ elif st.session_state.point2 <= 0:
     st.write('あなたは倒れてしまった')
     st.session_state.gacya = True
     if st.button('もう一度戦う'):
-        st.session_state.gacya = False
         st.session_state.point1 = 150
         st.session_state.point2 = 150
+        st.session_state.gacya = False
+

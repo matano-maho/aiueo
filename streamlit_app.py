@@ -49,7 +49,10 @@ st.title('ことわざバトル')
 st.write('ことわざクイズに正解して敵を倒そう！')
 
 def kotowazagacya():
-    # ルール説明
+    global damage, owndamage  # グローバル変数として使用
+    damage = -1  # 初期化
+    owndamage = -1  # 初期化
+
     if st.button('ルール説明'):
         st.session_state.show_rules = True
 
@@ -168,7 +171,7 @@ def kotowazagacya():
         damagecoment = '敵に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
     elif damage <= 45:
         damagecoment = '敵に' + str(damage) + 'ダメージ！大ダメージを与えた'
-
+    
     st.write(damagecoment)
     st.write(f"敵の体力: {st.session_state.point1}")
 
@@ -206,4 +209,3 @@ if st.session_state.point2 <= 0:
 
 if st.session_state.gacya:
     kotowazagacya()
-

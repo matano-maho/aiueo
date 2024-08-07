@@ -166,45 +166,41 @@ def kotowazagacya():
 
             else:
                 st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
-
-if st.session_state.gacya == True:
-    kotowazagacya()
-else:
-    pass
-
-
-damagecoment = ""
-if damage == -1:
     damagecoment = ""
-elif damage == 0:
-    damagecoment = '残念！あなたはダメージを与えられなかった'
-    st.session_state.point1 -= damage
-elif damage <= 10:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！かすり傷を与えた'
-    st.session_state.point1 -= damage
-elif damage <= 35:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
-    st.session_state.point1 -= damage
-elif damage <= 45:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！大ダメージを与えた'
-    st.session_state.point1 -= damage
+    if damage == -1:
+        damagecoment = ""
+    elif damage == 0:
+        damagecoment = '残念！あなたはダメージを与えられなかった'
+        st.session_state.point1 -= damage
+    elif damage <= 10:
+        damagecoment = '敵に' + str(damage) + 'ダメージ！かすり傷を与えた'
+        st.session_state.point1 -= damage
+    elif damage <= 35:
+        damagecoment = '敵に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
+        st.session_state.point1 -= damage
+    elif damage <= 45:
+        damagecoment = '敵に' + str(damage) + 'ダメージ！大ダメージを与えた'
+        st.session_state.point1 -= damage
     
-st.write(damagecoment)
-st.write(f"敵の体力: {st.session_state.point1}")
+    st.write(damagecoment)
+    st.write(f"敵の体力: {st.session_state.point1}")
 
-if st.session_state.selected_word is not None:
-    rarity = st.session_state.selected_word['レア度']
-    if owndamage == -1:
-        pass
-    elif rarity == 'N':
-        if owndamage >= 26:
-            st.write('自分は' + str(owndamage) + 'の大ダメージを受けた...')
-        elif owndamage > 0:
-            st.write('自分は' + str(owndamage) + '回復した')
-    else:
-        st.write('自分は' + str(owndamage) + 'ダメージを受けた')
+    if st.session_state.selected_word is not None:
+        rarity = st.session_state.selected_word['レア度']
+        if owndamage == -1:
+            pass
+        elif rarity == 'N':
+            if owndamage >= 26:
+                st.write('自分は' + str(owndamage) + 'の大ダメージを受けた...')
+            elif owndamage > 0:
+                st.write('自分は' + str(owndamage) + '回復した')
+        else:
+            st.write('自分は' + str(owndamage) + 'ダメージを受けた')
 
-st.write(f"自分の体力: {st.session_state.point2}")
+    st.write(f"自分の体力: {st.session_state.point2}")
+
+
+
 
 # 勝敗の判定
 if st.session_state.point1 <= 0:
@@ -224,4 +220,10 @@ if st.session_state.point2 <= 0:
         st.session_state.gacya = True
         st.session_state.point1 = 150
         st.session_state.point2 = 150
+
+
+if st.session_state.gacya == True:
+    kotowazagacya()
+else:
+    pass
 

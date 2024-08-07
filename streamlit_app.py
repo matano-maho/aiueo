@@ -48,11 +48,8 @@ if 'user_input' not in st.session_state:
 st.title('ことわざバトル')
 st.write('ことわざクイズに正解して敵を倒そう！')
 
-damage = -1
-owndamage = -1
-
 def kotowazagacya():
-    
+    # ルール説明
     if st.button('ルール説明'):
         st.session_state.show_rules = True
 
@@ -63,7 +60,6 @@ def kotowazagacya():
         st.write('回復ガチャを引き、クイズに正解すると10から20回復しますが、クイズに不正解すると大ダメージを負ってしまいます。(問題の難易度は一番簡単です)')
         st.write('自分の体力がなくなる前に敵の体力を0にすれば勝ちです。それでは頑張ってください！')
 
-        # ルール説明を閉じるボタン
         if st.button('ルール説明を閉じる'):
             st.session_state.show_rules = False
 
@@ -71,12 +67,12 @@ def kotowazagacya():
 
     col1, col2 = st.columns(2)
     col3, col4 = st.columns(2)
+
     # ガチャボタンの処理
     with col1:
         if st.button('ノーマルガチャを引く！'):
             subset_df = words_df[words_df['レア度'] == 'R']
             selected_word = subset_df.sample().iloc[0]
-
             st.session_state.selected_word = selected_word
             st.session_state.display_meaning = False
             st.session_state.history.append(selected_word)
@@ -87,7 +83,6 @@ def kotowazagacya():
         if st.button('レアガチャを引く！'):
             subset_df = words_df[words_df['レア度'] == 'SR']
             selected_word = subset_df.sample().iloc[0]
-
             st.session_state.selected_word = selected_word
             st.session_state.display_meaning = False
             st.session_state.history.append(selected_word)
@@ -98,11 +93,9 @@ def kotowazagacya():
         if st.button('スーパーレアガチャを引く！'):
             subset_df = words_df[words_df['レア度'] == 'SSR']
             selected_word = subset_df.sample().iloc[0]
-
             st.session_state.selected_word = selected_word
             st.session_state.display_meaning = False
             st.session_state.history.append(selected_word)
-        
             st.session_state.is_answered = False
             st.session_state.user_input = ""
 
@@ -110,14 +103,11 @@ def kotowazagacya():
         if st.button('回復ガチャを引く！'):
             subset_df = words_df[words_df['レア度'] == 'N']
             selected_word = subset_df.sample().iloc[0]
-
             st.session_state.selected_word = selected_word
             st.session_state.display_meaning = False
             st.session_state.history.append(selected_word)
-        
             st.session_state.is_answered = False
             st.session_state.user_input = ""
-
 
     # 選択したことわざの意味を表示
     if st.session_state.selected_word is not None:
@@ -149,7 +139,7 @@ def kotowazagacya():
                         owndamage = np.random.randint(10, 25)
                         st.session_state.point1 -= damage
                         st.session_state.point2 -= owndamage
-                
+
                     st.session_state.last_rarity = rarity
                     st.session_state.is_answered = True
                 else:
@@ -166,41 +156,34 @@ def kotowazagacya():
 
             else:
                 st.warning("正誤判定はすでに行われました。新しいガチャを引いてください。")
+
     damagecoment = ""
     if damage == -1:
         damagecoment = ""
     elif damage == 0:
         damagecoment = '残念！あなたはダメージを与えられなかった'
-        st.session_state.point1 -= damage
     elif damage <= 10:
         damagecoment = '敵に' + str(damage) + 'ダメージ！かすり傷を与えた'
-        st.session_state.point1 -= damage
     elif damage <= 35:
         damagecoment = '敵に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
-        st.session_state.point1 -= damage
     elif damage <= 45:
         damagecoment = '敵に' + str(damage) + 'ダメージ！大ダメージを与えた'
-        st.session_state.point1 -= damage
-    
+
     st.write(damagecoment)
     st.write(f"敵の体力: {st.session_state.point1}")
 
     if st.session_state.selected_word is not None:
         rarity = st.session_state.selected_word['レア度']
-        if owndamage == -1:
-            pass
-        elif rarity == 'N':
-            if owndamage >= 26:
-                st.write('自分は' + str(owndamage) + 'の大ダメージを受けた...')
-            elif owndamage > 0:
-                st.write('自分は' + str(owndamage) + '回復した')
-        else:
-            st.write('自分は' + str(owndamage) + 'ダメージを受けた')
+        if owndamage != -1:
+            if rarity == 'N':
+                if owndamage >= 26:
+                    st.write('自分は' + str(owndamage) + 'の大ダメージを受けた...')
+                elif owndamage > 0:
+                    st.write('自分は' + str(owndamage) + '回復した')
+            else:
+                st.write('自分は' + str(owndamage) + 'ダメージを受けた')
 
     st.write(f"自分の体力: {st.session_state.point2}")
-
-
-
 
 # 勝敗の判定
 if st.session_state.point1 <= 0:
@@ -221,9 +204,6 @@ if st.session_state.point2 <= 0:
         st.session_state.point1 = 150
         st.session_state.point2 = 150
 
-
-if st.session_state.gacya == True:
+if st.session_state.gacya:
     kotowazagacya()
-else:
-    pass
 

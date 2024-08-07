@@ -152,17 +152,18 @@ if st.session_state.selected_word is not None:
         elif st.session_state.gacya:
             st.warning('勝敗はつきました。まだゲームを続けたいときはもう一度戦うを押してください')
 
+# Display damage comment
 damagecoment = ""
 if st.session_state.damage == -1:
     damagecoment = ""
 elif st.session_state.damage == 0:
     damagecoment = '残念！あなたはダメージを与えられなかった'
 elif st.session_state.damage <= 10:
-    damagecoment = '敵に' + str(st.session_state.damage) + 'ダメージ！かすり傷を与えた'
+    damagecoment = f'敵に {st.session_state.damage} ダメージ！かすり傷を与えた'
 elif st.session_state.damage <= 35:
-    damagecoment = '敵に' + str(st.session_state.damage) + 'ダメージ！そこそこのダメージを与えた'
+    damagecoment = f'敵に {st.session_state.damage} ダメージ！そこそこのダメージを与えた'
 elif st.session_state.damage <= 45:
-    damagecoment = '敵に' + str(st.session_state.damage) + 'ダメージ！大ダメージを与えた'
+    damagecoment = f'敵に {st.session_state.damage} ダメージ！大ダメージを与えた'
 
 st.write(damagecoment)
 
@@ -189,4 +190,3 @@ elif st.session_state.point2 <= 0:
         st.session_state.point1 = 150
         st.session_state.point2 = 150
         st.session_state.gacya = False
-

@@ -192,11 +192,11 @@ if st.session_state.selected_word is not None:
     if owndamage != -1:
         if rarity == 'N':
             if owndamage >= 26:
-                st.write('自分は' + str(owndamage) + 'の大ダメージを受けた...')
+                st.write('あなたは' + str(owndamage) + 'の大ダメージを受けた...')
             elif owndamage > 0:
-                st.write('自分は' + str(owndamage) + '回復した')
+                st.write('あなたは' + str(owndamage) + '回復した')
         else:
-            st.write('自分は' + str(owndamage) + 'ダメージを受けた')
+            st.write('あなたは' + str(owndamage) + 'ダメージを受けた')
 
 if st.session_state.point2 > 0:
     st.write(f"敵の体力: {st.session_state.point2}")

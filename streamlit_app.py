@@ -188,6 +188,10 @@ def kotowazagacya():
 
     st.write(f"自分の体力: {st.session_state.point2}")
 
+if st.session_state.gacya:
+    kotowazagacya()
+
+
 # 勝敗の判定
 if st.session_state.point1 <= 0:
     st.session_state.point1 = 0
@@ -207,5 +211,3 @@ if st.session_state.point2 <= 0:
         st.session_state.point1 = 150
         st.session_state.point2 = 150
 
-if st.session_state.gacya:
-    kotowazagacya()

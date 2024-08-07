@@ -202,7 +202,7 @@ if st.session_state.point2 > 0:
     st.write(f"敵の体力: {st.session_state.point2}")
 elif st.session_state.point2 <=0:
     st.session_state.point2 = 0
-    st.write('敵を倒した！')
+    st.write('あなたは倒れてしまった')
     st.session_state.gacya = True
     if st.button('もう一度戦う'):
         st.session_state.gacya = False

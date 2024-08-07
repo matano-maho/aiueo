@@ -208,7 +208,7 @@ def result():
             st.session_state.point1 = 150
             st.session_state.point2 = 150
 
-result()
-
 if st.session_state.gacya:
     kotowazagacya()
+
+result()

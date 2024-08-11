@@ -187,6 +187,7 @@ elif st.session_state.point1 <=0:
         st.session_state.point1 = 150
         st.session_state.point2 = 150
 
+
 if st.session_state.selected_word is not None:
     rarity = st.session_state.selected_word['レア度']
     if owndamage != -1:

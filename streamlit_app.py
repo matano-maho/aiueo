@@ -168,12 +168,12 @@ if damage == -1:
 elif damage == 0:
     damagecoment = '残念！あなたはダメージを与えられなかった'
 elif damage <= 10:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！かすり傷を与えた'
+    damagecoment = f'敵に{damage}ダメージ！かすり傷を与えた'
 elif damage <= 35:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！そこそこのダメージを与えた'
+    damagecoment = f'敵に{damage}ダメージ！そこそこなダメージを与えた'
 elif damage <= 45:
-    damagecoment = '敵に' + str(damage) + 'ダメージ！大ダメージを与えた'
-    
+    damagecoment = f'敵に{damage}ダメージ！大ダメージを与えた'
+
 st.write(damagecoment)
 
 if st.session_state.point1 > 0:

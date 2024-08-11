@@ -199,7 +199,7 @@ if st.session_state.selected_word is not None:
             st.write('あなたは' + str(owndamage) + 'ダメージを受けた')
 
 if st.session_state.point2 > 0:
-    st.write(f"敵の体力: {st.session_state.point2}")
+    st.write(f"あなたの体力: {st.session_state.point2}")
 elif st.session_state.point2 <=0:
     st.session_state.point2 = 0
     st.write('あなたは倒れてしまった')
